@@ -1,0 +1,56 @@
+version: '3.9'
+services:
+  db:
+    image: 'postgres:16.0'
+    environment:
+      POSTGRES_PASSWORD: supersecure
+      POSTGRES_USER: moab
+      POSTGRES_DB: ecommerce
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'ecommercedb:/var/lib/postgresql/data'
+      - './ecommerce.sql:/docker-entrypoint-initdb.d/init.sql'
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: moab@test.com
+      PGADMIN_DEFAULT_PASSWORD: example
+    ports:
+      - 9090:80
+
+  product:
+    image: product-service-api
+    environment:
+      PORT: :8080
+      DB_URL: 'postgres://moab:supersecure@db:5432/ecommerce'
+    ports:
+      - 5000:8080
+
+  auth:
+    image: auth-service-api
+    environment:
+      PORT: :8080
+      DB_URL: 'postgres://moab:supersecure@db:5432/ecommerce'
+      JWT_SECRET: supersecrekey
+    ports:
+      - 2020:8080
+
+  user:
+    image: user-service-api
+    environment:
+      PORT: :8080
+      DB_URL: 'postgres://moab:supersecure@db:5432/ecommerce'
+    ports:
+      - 5050:8080
+
+  order:
+    image: order-service-api
+    environment:
+      PORT: :8080
+      DB_URL: 'postgres://moab:supersecure@db:5432/ecommerce'
+    ports:
+      - 8080:8080
+
+volumes:
+  ecommercedb:
