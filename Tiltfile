@@ -8,62 +8,63 @@ version_settings(constraint='>=0.22.2')
 # and runs pip (python package manager) to update dependencies when changed
 # https://docs.tilt.dev/api.html#api.docker_build
 # https://docs.tilt.dev/live_update_reference.html
+local_resource(
+  'product-service-api',
+  'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o product_svc/build/product-service-api ./product_svc/cmd/*.go'
+  )
+
 docker_build(
     'product-service-api',
     context='./product_svc',
     dockerfile='./product_svc/Dockerfile',
-    # only=['./product_svc'],
-    # live_update=[
-    #     sync('./product_svc', '/app'),
-    #     run(
-    #         'go mod download',
-    #         trigger=['./go.mod']
-    #     )
-    # ]
+    only=['./build'],
+    live_update=[
+        sync('./product_svc/build', '/app/build'),
+    ]
 )
-
+local_resource(
+  'user-service-api',
+  'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o user_svc/build/user-service-api ./user_svc/cmd/*.go'
+  )
 
 docker_build(
     'user-service-api',
     context='./user_svc',
     dockerfile='./user_svc/Dockerfile',
-    # only=['./user_svc'],
-    # live_update=[
-    #     sync('./user_svc', '/app'),
-    #     run(
-    #         'go mod download',
-    #         trigger=['./go.mod']
-    #     )
-    # ]
+    only=['./build'],
+    live_update=[
+        sync('./user_svc/build', '/app/build'),
+    ]
 )
-
-docker_build(
-    'auth-service-api',
-    context='./auth_svc',
-    dockerfile='./auth_svc/Dockerfile',
-    # only=['./user_svc'],
-    # live_update=[
-    #     sync('./user_svc', '/app'),
-    #     run(
-    #         'go mod download',
-    #         trigger=['./go.mod']
-    #     )
-    # ]
-)
+local_resource(
+  'order-service-api',
+  'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o order_svc/build/order-service-api ./order_svc/cmd/*.go'
+  )
 
 docker_build(
     'order-service-api',
     context='./order_svc',
     dockerfile='./order_svc/Dockerfile',
-    # only=['./order_svc'],
-    # live_update=[
-    #     sync('./order_svc', "/app"),
-    #     run(
-    #         'go mod download',
-    #         trigger=['./go.mod']
-    #     )
-    # ]
+    only=['./build'],
+    live_update=[
+        sync('./order_svc/build', '/app/build'),
+    ]
 )
+local_resource(
+  'auth-service-api',
+  'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o auth_svc/build/auth-service-api ./auth_svc/cmd/*.go'
+  )
+
+docker_build(
+    'auth-service-api',
+    context='./auth_svc',
+    dockerfile='./auth_svc/Dockerfile',
+    only=['./build'],
+    live_update=[
+        sync('./auth_svc/build', '/app/build'),
+    ]
+)
+
 
 # Path to file
 docker_compose('./docker-compose.yaml')
