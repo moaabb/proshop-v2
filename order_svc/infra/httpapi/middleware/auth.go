@@ -27,16 +27,15 @@ func Authenticate(l *zap.Logger) gin.HandlerFunc {
 			return
 		}
 
+		var a AuthResult
+		json.NewDecoder(resp.Body).Decode(&a)
+		l.Info(fmt.Sprintf("response from auth Service: {statusCode: %v, body: %v}", resp.StatusCode, a))
 		if resp.StatusCode != 200 {
-			l.Info(fmt.Sprintf("response from auth Service: {statusCode: %v, body: %v}", resp.StatusCode, resp.Body))
 			c.AbortWithStatusJSON(resp.StatusCode, gin.H{
 				"error": "invalid credentials",
 			})
 			return
 		}
-
-		var a AuthResult
-		json.NewDecoder(resp.Body).Decode(&a)
 
 		c.Set("userId", a.UserId)
 

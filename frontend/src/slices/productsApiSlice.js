@@ -5,7 +5,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: ({ keyword, pageNumber }) => ({
-        url: PRODUCTS_URL,
+        url: `${PRODUCTS_URL}/v1/products`,
         params: { keyword, pageNumber },
       }),
       keepUnusedDataFor: 5,
@@ -13,49 +13,55 @@ export const productsApiSlice = apiSlice.injectEndpoints({
     }),
     getProductDetails: builder.query({
       query: (productId) => ({
-        url: `${PRODUCTS_URL}/${productId}`,
+        url: `${PRODUCTS_URL}/v1/products/${productId}`,
       }),
       keepUnusedDataFor: 5,
     }),
     createProduct: builder.mutation({
-      query: () => ({
-        url: `${PRODUCTS_URL}`,
+      query: (product, token) => ({
+        url: `${PRODUCTS_URL}/v1/products`,
         method: 'POST',
+        body: product,
+        headers: { Authorization: `Bearer ${token}` },
       }),
       invalidatesTags: ['Product'],
     }),
     updateProduct: builder.mutation({
-      query: (data) => ({
-        url: `${PRODUCTS_URL}/${data.productId}`,
+      query: (data, token) => ({
+        url: `${PRODUCTS_URL}/v1/products/${data.productId}`,
         method: 'PUT',
         body: data,
+        headers: { Authorization: `Bearer ${token}` },
       }),
       invalidatesTags: ['Products'],
     }),
     uploadProductImage: builder.mutation({
-      query: (data) => ({
+      query: (data, token) => ({
         url: `/api/upload`,
         method: 'POST',
         body: data,
+        headers: { Authorization: `Bearer ${token}` },
       }),
     }),
     deleteProduct: builder.mutation({
-      query: (productId) => ({
-        url: `${PRODUCTS_URL}/${productId}`,
+      query: (productId, token) => ({
+        url: `${PRODUCTS_URL}/v1/products/${productId}`,
         method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
       }),
       providesTags: ['Product'],
     }),
     createReview: builder.mutation({
-      query: (data) => ({
-        url: `${PRODUCTS_URL}/${data.productId}/reviews`,
+      query: (data, token) => ({
+        url: `${PRODUCTS_URL}/v1/products/${data.productId}/reviews`,
         method: 'POST',
         body: data,
+        headers: { Authorization: `Bearer ${token}` },
       }),
       invalidatesTags: ['Product'],
     }),
     getTopProducts: builder.query({
-      query: () => `${PRODUCTS_URL}/top`,
+      query: () => `${PRODUCTS_URL}/v1/products/top`,
       keepUnusedDataFor: 5,
     }),
   }),

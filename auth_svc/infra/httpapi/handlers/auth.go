@@ -51,22 +51,22 @@ func (ah *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	token, claims, err := utils.GenerateJWT(user.Id, ah.cfg.JwtSecret)
+	token, _, err := utils.GenerateJWT(user.Id, ah.cfg.JwtSecret)
 	if err != nil {
 		ah.l.Error("error generating password", zap.Error(err))
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "internal server error"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"token":      token,
-		"userId":     claims.ID,
-		"expires_at": claims.ExpiresAt,
-	})
+	user.Password = ""
+	user.Token = token
+
+	c.JSON(http.StatusOK, user)
 }
 
 func (ah *AuthHandler) ValidateRequest(c *gin.Context) {
 	token := strings.Split(c.Request.Header.Get("Authorization"), "Bearer ")
+	ah.l.Info("validating token...")
 	if len(token) < 2 {
 		ah.l.Error("token not found in the request")
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
@@ -84,6 +84,7 @@ func (ah *AuthHandler) ValidateRequest(c *gin.Context) {
 		return
 	}
 
+	ah.l.Info("request validated")
 	c.JSON(http.StatusOK, gin.H{
 		"userId": userId,
 	})

@@ -38,7 +38,7 @@ func (oh *OrderHandler) GetByUserId(c *gin.Context) {
 	oh.l.Info("Getting orders by user ID...")
 	userId := c.GetString("userId")
 	u, err := strconv.ParseUint(userId, 10, 0)
-	if userId != "" || err != nil {
+	if userId == "" || err != nil {
 		oh.l.Error("coult not get userId")
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
@@ -52,6 +52,9 @@ func (oh *OrderHandler) GetByUserId(c *gin.Context) {
 		return
 	}
 
+	if len(orders) == 0 {
+		orders = []order.Order{}
+	}
 	c.JSON(http.StatusOK, orders)
 }
 

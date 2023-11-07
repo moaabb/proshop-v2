@@ -20,6 +20,7 @@ docker_build(
     only=['./build'],
     live_update=[
         sync('./product_svc/build', '/app/build'),
+        restart_container() 
     ]
 )
 local_resource(
@@ -34,6 +35,7 @@ docker_build(
     only=['./build'],
     live_update=[
         sync('./user_svc/build', '/app/build'),
+        restart_container() 
     ]
 )
 local_resource(
@@ -48,6 +50,7 @@ docker_build(
     only=['./build'],
     live_update=[
         sync('./order_svc/build', '/app/build'),
+        restart_container() 
     ]
 )
 local_resource(
@@ -62,6 +65,7 @@ docker_build(
     only=['./build'],
     live_update=[
         sync('./auth_svc/build', '/app/build'),
+        restart_container() 
     ]
 )
 
