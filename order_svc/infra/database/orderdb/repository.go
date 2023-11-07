@@ -78,10 +78,10 @@ func (or *Repository) GetById(id uint) (order.Order, error) {
 	err := or.db.QueryRowContext(ctx, GetOrderById, id).Scan(
 		&o.ID,
 		&o.UserID,
-		&o.ShippingAddress,
-		&o.ShippingCity,
-		&o.ShippingPostalCode,
-		&o.ShippingCountry,
+		&o.ShippingAddress.Address,
+		&o.ShippingAddress.City,
+		&o.ShippingAddress.PostalCode,
+		&o.ShippingAddress.Country,
 		&o.PaymentMethod,
 		&o.PaymentID,
 		&o.PaymentStatus,
@@ -103,23 +103,50 @@ func (or *Repository) GetById(id uint) (order.Order, error) {
 		&o.User.CreatedAt,
 		&o.User.UpdatedAt,
 	)
-
 	if err != nil {
 		return order.Order{}, err
 	}
 
+	var orderItems []order.OrderItem
+	rows, err := or.db.QueryContext(ctx, GetOrderItems, o.ID)
+	if err != nil {
+		return order.Order{}, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var oi order.OrderItem
+		err = rows.Scan(
+			&oi.ProductID,
+			&oi.Name,
+			&oi.Image,
+			&oi.Description,
+			&oi.Price,
+			&oi.Quantity,
+		)
+		if err != nil {
+			return order.Order{}, err
+		}
+
+		orderItems = append(orderItems, oi)
+	}
+	if rows.Err() != nil {
+		return order.Order{}, err
+	}
+
+	o.OrderItems = orderItems
+
 	return o, nil
 }
 func (or *Repository) Create(o order.Order) (order.Order, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*8)
 	defer cancel()
 
 	newOrder, err := scanOrder(or.db.QueryRowContext(ctx, CreateOrder,
 		o.UserID,
-		o.ShippingAddress,
-		o.ShippingCity,
-		o.ShippingPostalCode,
-		o.ShippingCountry,
+		o.ShippingAddress.Address,
+		o.ShippingAddress.City,
+		o.ShippingAddress.PostalCode,
+		o.ShippingAddress.Country,
 		o.PaymentMethod,
 		o.PaymentID,
 		o.PaymentStatus,
@@ -140,6 +167,35 @@ func (or *Repository) Create(o order.Order) (order.Order, error) {
 		return order.Order{}, err
 	}
 
+	var orderItems []order.OrderItem
+	for _, v := range o.OrderItems {
+		var newOi order.OrderItem
+		err = or.db.QueryRowContext(ctx, CreateOrderItem,
+			newOrder.ID,
+			v.Image,
+			v.ProductID,
+			v.Quantity,
+			v.Price,
+			time.Now(),
+			time.Now(),
+		).Scan(
+			&newOi.ID,
+			&newOi.OrderID,
+			&newOi.Image,
+			&newOi.ProductID,
+			&newOi.Quantity,
+			&newOi.Price,
+			&newOi.CreatedAt,
+			&newOi.UpdatedAt,
+		)
+		if err != nil {
+			return order.Order{}, err
+		}
+		orderItems = append(orderItems, newOi)
+	}
+
+	newOrder.OrderItems = orderItems
+
 	return newOrder, nil
 }
 func (or *Repository) Update(orderID uint, updatedOrder order.Order) (order.Order, error) {
@@ -149,10 +205,10 @@ func (or *Repository) Update(orderID uint, updatedOrder order.Order) (order.Orde
 	// Execute the update query
 	updatedOrder, err := scanOrder(or.db.QueryRowContext(ctx, UpdateOrder,
 		updatedOrder.UserID,
-		updatedOrder.ShippingAddress,
-		updatedOrder.ShippingCity,
-		updatedOrder.ShippingPostalCode,
-		updatedOrder.ShippingCountry,
+		updatedOrder.ShippingAddress.Address,
+		updatedOrder.ShippingAddress.City,
+		updatedOrder.ShippingAddress.PostalCode,
+		updatedOrder.ShippingAddress.Country,
 		updatedOrder.PaymentMethod,
 		updatedOrder.PaymentID,
 		updatedOrder.PaymentStatus,
@@ -198,10 +254,10 @@ func scanOrder(row interface{}) (order.Order, error) {
 		err = row.Scan(
 			&o.ID,
 			&o.UserID,
-			&o.ShippingAddress,
-			&o.ShippingCity,
-			&o.ShippingPostalCode,
-			&o.ShippingCountry,
+			&o.ShippingAddress.Address,
+			&o.ShippingAddress.City,
+			&o.ShippingAddress.PostalCode,
+			&o.ShippingAddress.Country,
 			&o.PaymentMethod,
 			&o.PaymentID,
 			&o.PaymentStatus,
@@ -222,10 +278,10 @@ func scanOrder(row interface{}) (order.Order, error) {
 		err = row.Scan(
 			&o.ID,
 			&o.UserID,
-			&o.ShippingAddress,
-			&o.ShippingCity,
-			&o.ShippingPostalCode,
-			&o.ShippingCountry,
+			&o.ShippingAddress.Address,
+			&o.ShippingAddress.City,
+			&o.ShippingAddress.PostalCode,
+			&o.ShippingAddress.Country,
 			&o.PaymentMethod,
 			&o.PaymentID,
 			&o.PaymentStatus,

@@ -41,7 +41,7 @@ const ProfileScreen = () => {
     } else {
       try {
         const res = await updateProfile({
-          _id: userInfo._id,
+          id: userInfo.id,
           name,
           email,
           password,
@@ -128,8 +128,8 @@ const ProfileScreen = () => {
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id}</td>
+                <tr key={order.id}>
+                  <td>{order.id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
                   <td>{order.totalPrice}</td>
                   <td>
@@ -147,7 +147,7 @@ const ProfileScreen = () => {
                     )}
                   </td>
                   <td>
-                    <LinkContainer to={`/order/${order._id}`}>
+                    <LinkContainer to={`/order/${order.id}`}>
                       <Button className="btn-sm" variant="light">
                         Details
                       </Button>

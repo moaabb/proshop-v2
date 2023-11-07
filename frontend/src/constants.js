@@ -5,4 +5,4 @@ export const PRODUCTS_URL = '/products';
 export const USERS_URL = '/users';
 export const AUTH_URL = '/auth';
 export const ORDERS_URL = '/orders';
-export const PAYPAL_URL = '/api/config/paypal';
+export const PAYPAL_URL = '/auth/v1/config/paypal';

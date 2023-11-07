@@ -4,7 +4,7 @@ var GetOrderById = `SELECT o.id, o.user_id, o.shipping_address, o.shipping_city,
 
 var GetByUserId = `SELECT id, user_id, shipping_address, shipping_city, shipping_postal_code, shipping_country, payment_method, payment_id, payment_status, payment_update_time, payment_email_address, items_price, tax_price, shipping_price, total_price, is_paid, paid_at, is_delivered, delivered_at, created_at, updated_at FROM orders WHERE user_id = $1`
 
-var GetOrders = "SELECT id, user_id, shipping_address, shipping_city, shipping_postal_code, shipping_country, payment_method, payment_id, payment_status, payment_update_time, payment_email_address, items_price, tax_price, shipping_price, total_price, is_paid, paid_at, is_delivered, delivered_at, created_at, updated_at FROM orders "
+var GetOrders = "SELECT id, user_id, shipping_address, shipping_city, shipping_postal_code, shipping_country, payment_method, payment_id, payment_status, payment_update_time, payment_email_address, items_price, tax_price, shipping_price, total_price, is_paid, paid_at, is_delivered, delivered_at, created_at, updated_at FROM orders"
 
 var CreateOrder = `INSERT INTO orders (
 	user_id,
@@ -52,6 +52,10 @@ var CreateOrder = `INSERT INTO orders (
 	created_at,
 	updated_at
   `
+
+var CreateOrderItem = `INSERT INTO order_items (order_id, image, product_id, quantity, price, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, order_id, image, product_id, quantity, price, created_at, updated_at`
+
+var GetOrderItems = `SELECT p.id, p.name, p.image, p.description, oi.price, oi.quantity FROM order_items oi LEFT JOIN products p ON oi.product_id = p.id WHERE order_id = $1`
 
 var UpdateOrder = `UPDATE orders
 SET

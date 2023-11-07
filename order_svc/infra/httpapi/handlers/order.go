@@ -81,16 +81,21 @@ func (oh *OrderHandler) GetById(c *gin.Context) {
 func (oh *OrderHandler) Create(c *gin.Context) {
 	var o order.Order
 	c.BindJSON(&o)
+	userId, err := strconv.ParseUint(c.GetString("userId"), 10, 64)
+	if err != nil {
+		oh.l.Error("Error getting order ID", zap.Error(err))
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Could not create order"})
+		return
+	}
+	o.UserID = int(userId)
 
 	oh.l.Info("Creating order in the database")
 	newOrder, err := oh.repository.Create(o)
 	if err != nil {
 		oh.l.Error("Error while creating order", zap.Error(err))
-		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Could not create order"})
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": "Could not create order"})
 		return
 	}
-
-	newOrder.UserID = 1
 
 	c.JSON(http.StatusCreated, newOrder)
 }

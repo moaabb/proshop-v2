@@ -2,6 +2,7 @@ package router
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -30,5 +31,10 @@ func Load(r *gin.Engine, uh *handlers.AuthHandler, l *zap.Logger) {
 
 	r.POST("/v1/auth/login", uh.Login)
 	r.POST("/v1/auth", uh.ValidateRequest)
+	r.GET("/v1/config/paypal", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{
+			"clientId": "AcjdJcMNmWX7kNFqHrJq2AhqimTEY5nhkgLP09Q7ZsJHgbzyD1FnlOk4bU4pE3agUcBaqNuhPXmVS44K",
+		})
+	})
 
 }

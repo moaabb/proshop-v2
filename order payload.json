@@ -1,0 +1,41 @@
+{
+  "orderItems": [
+    {
+      "productId": "1",
+      "name": "Airpods Wireless Bluetooth Headphones",
+      "image": "/images/airpods.jpg",
+      "description": "Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working",
+      "brand": "Apple",
+      "category": "Electronics",
+      "price": 89.99,
+      "countInStock": 10,
+      "createdAt": "2023-11-05T11:40:18.910681Z",
+      "updatedAt": "2023-11-05T11:40:18.910681Z",
+      "quantity": 1
+    },
+    {
+      "productId": "2",
+      "name": "iPhone 13 Pro 256GB Memory",
+      "image": "/images/phone.jpg",
+      "description": "Introducing the iPhone 13 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life",
+      "brand": "Apple",
+      "category": "Electronics",
+      "price": 599.99,
+      "countInStock": 7,
+      "createdAt": "2023-11-05T11:40:18.914774Z",
+      "updatedAt": "2023-11-05T11:40:18.914774Z",
+      "quantity": 1
+    }
+  ],
+  "shippingAddress": {
+    "address": "Lagoa do Peixe",
+    "city": "L",
+    "postalCode": "46425000",
+    "country": "Brazil"
+  },
+  "paymentMethod": "PayPal",
+  "itemsPrice": "689.98",
+  "shippingPrice": "0.00",
+  "taxPrice": "103.50",
+  "totalPrice": "793.48"
+}
