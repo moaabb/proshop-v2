@@ -118,7 +118,9 @@ func (uh *UserHandler) Update(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, user)
+	user.Password = ""
+
+	c.JSON(http.StatusOK, user)
 }
 
 func (uh *UserHandler) Delete(c *gin.Context) {

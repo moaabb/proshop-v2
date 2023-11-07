@@ -61,6 +61,7 @@ func (ur *Repository) GetById(id uint) (user.User, error) {
 		&u.Id,
 		&u.Name,
 		&u.Email,
+		&u.Password,
 		&u.IsAdmin,
 		&u.CreatedAt,
 		&u.UpdatedAt,

@@ -13,7 +13,7 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${workspaceFolder}/order_svc/cmd/"
+      "program": "${workspaceFolder}/user_svc/cmd/"
     }
   ]
 }

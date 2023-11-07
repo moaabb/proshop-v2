@@ -16,7 +16,16 @@ type AuthResult struct {
 func Authenticate(l *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		req, _ := http.NewRequest("POST", "http://auth:8080/v1/auth", nil)
-		req.Header.Set("Authorization", c.GetHeader("Authorization"))
+		cookie, err := c.Cookie("jwt")
+		if err != nil {
+			l.Error("could not retrieve auth token", zap.Error(err))
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error": "invalid credentials",
+			})
+			return
+		}
+
+		req.Header.Set("Authorization", cookie)
 		l.Info(fmt.Sprintf("making request to auth Service: %v, %v, %v", req.Method, req.Body, req.URL))
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {

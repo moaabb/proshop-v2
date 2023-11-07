@@ -8,7 +8,6 @@ type User struct {
 	Email     string    `json:"email"`
 	Password  string    `json:"password,omitempty"`
 	IsAdmin   bool      `json:"isAdmin"`
-	Token     string    `json:"token"`
 	CreatedAt time.Time `json:"-"`
 	UpdatedAt time.Time `json:"-"`
 }

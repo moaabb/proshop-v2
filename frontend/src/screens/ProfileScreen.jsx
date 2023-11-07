@@ -26,7 +26,7 @@ const ProfileScreen = () => {
   } = useGetMyOrdersQuery(userInfo.token);
 
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
-    useProfileMutation(userInfo.token);
+    useProfileMutation();
 
   useEffect(() => {
     setName(userInfo.name);
@@ -41,10 +41,9 @@ const ProfileScreen = () => {
     } else {
       try {
         const res = await updateProfile({
+          data: { name, email, password },
+          token: userInfo.token,
           id: userInfo.id,
-          name,
-          email,
-          password,
         }).unwrap();
         dispatch(setCredentials({ ...res }));
         toast.success('Profile updated successfully');
