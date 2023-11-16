@@ -1,17 +1,71 @@
 version: '3.9'
 services:
+  # kong-setup:
+  #   image: kong/kong-gateway:3.5.0.0
+  #   depends_on:
+  #     - kong-database
+  #   networks:
+  #     - kong-net
+  #   environment:
+  #     - KONG_DATABASE=postgres
+  #     - KONG_PG_HOST=kong-database
+  #     - KONG_PG_PASSWORD=kongpass
+  #     - KONG_PASSWORD=test
+  #   command: kong migrations bootstrap
+
+  kong:
+    image: kong/kong-gateway:3.5.0.0
+    networks:
+      - kong-net
+    depends_on:
+      - kong-database
+    environment:
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=kong-database
+      - KONG_PG_PASSWORD=kongpass
+      - KONG_PASSWORD=test
+      - "KONG_PROXY_ACCESS_LOG=/dev/stdout"
+      - "KONG_ADMIN_ACCESS_LOG=/dev/stdout"
+      - "KONG_PROXY_ERROR_LOG=/dev/stderr"
+      - "KONG_ADMIN_ERROR_LOG=/dev/stderr"
+      - "KONG_ADMIN_LISTEN=0.0.0.0:8001"
+      - "KONG_ADMIN_GUI_URL=http://localhost:8002"
+    ports:
+      - 8000:8000
+      - 8443:8443
+      - 8001:8001
+      - 8444:8444
+      - 8002:8002
+      - 8445:8445
+      - 8003:8003
+      - 8004:8004
+  
+  kong-database:
+    container_name: kong-database
+    image: postgres:13
+    networks:
+      - kong-net
+    environment:
+      - POSTGRES_USER=kong
+      - POSTGRES_DB=kong
+      - POSTGRES_PASSWORD=kongpass
+
   db:
+    networks:
+      - app
     image: 'postgres:16.0'
+    ports:
+      - 5432:5432
     environment:
       POSTGRES_PASSWORD: supersecure
       POSTGRES_USER: moab
       POSTGRES_DB: ecommerce
-    ports:
-      - '5432:5432'
     volumes:
       - 'ecommercedb:/var/lib/postgresql/data'
       - './ecommerce.sql:/docker-entrypoint-initdb.d/init.sql'
   pgadmin:
+    networks:
+      - app
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: moab@test.com
@@ -20,6 +74,8 @@ services:
       - 9090:80
 
   product:
+    networks:
+      - app
     image: product-service-api
     environment:
       PORT: :8080
@@ -28,6 +84,8 @@ services:
       - 5000:8080
 
   auth:
+    networks:
+      - app
     image: auth-service-api
     environment:
       PORT: :8080
@@ -37,6 +95,8 @@ services:
       - 2020:8080
 
   user:
+    networks:
+      - app
     image: user-service-api
     environment:
       PORT: :8080
@@ -45,6 +105,8 @@ services:
       - 5050:8080
 
   order:
+    networks:
+      - app
     image: order-service-api
     environment:
       PORT: :8080
@@ -54,3 +116,7 @@ services:
 
 volumes:
   ecommercedb:
+
+networks:
+  kong-net:
+  app:

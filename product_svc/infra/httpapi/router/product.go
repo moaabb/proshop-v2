@@ -22,7 +22,7 @@ func Load(r *gin.Engine, ph *handlers.ProductHandler, l *zap.Logger) {
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://172.21.193.94:5000"
+			return origin == "http:/localhost:5000"
 		},
 		MaxAge: 12 * time.Hour,
 	}))

@@ -36,6 +36,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       query: (token) => ({
         url: `${ORDERS_URL}/v1/users/orders`,
         headers: { Authorization: `Bearer ${token}` },
+        credentials: "include"
       }),
       keepUnusedDataFor: 5,
     }),

@@ -58,8 +58,15 @@ func (ah *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	c.SetSameSite(http.SameSiteStrictMode)
-	c.SetCookie("token", token, 3600, "/", "172.21.193.94", false, true)
+	http.SetCookie(c.Writer, &http.Cookie{
+		Name:     "jwt",
+		Value:    token,
+		Domain:   "192.168.0.110",
+		Path:     "/",
+		HttpOnly: true,
+		SameSite: http.SameSiteStrictMode,
+		Secure:   false,
+	})
 
 	user.Password = ""
 
