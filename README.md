@@ -21,7 +21,29 @@ There are a lot of problems in the code, i am aware of it, i just didn't have th
 
 <br>
 
-## In the future i want to add:
+## In the future i want to add
 
 - gRPC -> Communication between microservices
 - RabbitMQ with asynchronous requests
+
+## How to run this locally
+
+For the backend you need to have Go and Tilt installed.
+
+To Start:
+
+```bash
+$ make start
+```
+
+To stop:
+
+```bash
+$ make stop
+```
+
+for the Frontend you will need to run the following:
+
+```bash
+$ cd ./frontend && npm i && npm start
+```

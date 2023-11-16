@@ -10,7 +10,8 @@ import (
 )
 
 type AuthResult struct {
-	UserId string `json:"userId"`
+	UserId  uint `json:"userId"`
+	IsAdmin bool `json:"isAdmin"`
 }
 
 func Authenticate(l *zap.Logger) gin.HandlerFunc {
@@ -25,7 +26,7 @@ func Authenticate(l *zap.Logger) gin.HandlerFunc {
 			return
 		}
 
-		req.Header.Set("Authorization", cookie)
+		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", cookie))
 		l.Info(fmt.Sprintf("making request to auth Service: %v, %v, %v", req.Method, req.Body, req.URL))
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {

@@ -1,2 +1,10 @@
+bootstrap:
+	tilt up & && sleep 10 && ./kong.sh && cd ./data && go run *.go
+
 start:
-	export DB_URL='postgres://moab:supersecure@localhost:5432/ecommerce' && export PORT=:3000 && cd user_svc GO RUN ./cmd && cd .. && cd ./product_svc && export PORT=:5000 && go run ./cmd && cd .. && export PORT=:8080 && cd order_svc go run ./cmd
+	tilt up
+	
+stop:
+	tilt down
+
+

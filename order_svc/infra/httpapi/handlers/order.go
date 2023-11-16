@@ -36,16 +36,15 @@ func (oh *OrderHandler) GetAll(c *gin.Context) {
 
 func (oh *OrderHandler) GetByUserId(c *gin.Context) {
 	oh.l.Info("Getting orders by user ID...")
-	userId := c.GetString("userId")
-	u, err := strconv.ParseUint(userId, 10, 0)
-	if userId == "" || err != nil {
+	userId := c.GetUint("userId")
+	if userId == 0 {
 		oh.l.Error("coult not get userId")
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
 	oh.l.Info("Fetching orders by user ID from the database")
-	orders, err := oh.repository.GetByUserId(uint(u))
+	orders, err := oh.repository.GetByUserId(uint(userId))
 	if err != nil {
 		oh.l.Error("Error while fetching orders by user ID", zap.Error(err))
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Could not fetch orders by user ID"})
@@ -81,9 +80,9 @@ func (oh *OrderHandler) GetById(c *gin.Context) {
 func (oh *OrderHandler) Create(c *gin.Context) {
 	var o order.Order
 	c.BindJSON(&o)
-	userId, err := strconv.ParseUint(c.GetString("userId"), 10, 64)
-	if err != nil {
-		oh.l.Error("Error getting order ID", zap.Error(err))
+	userId := c.GetUint("userId")
+	if userId == 0 {
+		oh.l.Error("Error getting order ID")
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Could not create order"})
 		return
 	}

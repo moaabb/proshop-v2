@@ -5,26 +5,36 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/moaabb/ecommerce/auth_svc/domain/user"
 )
 
-func GenerateJWT(userId uint, secret string) (string, jwt.RegisteredClaims, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.RegisteredClaims{
-		Issuer:    "proshop",
-		IssuedAt:  jwt.NewNumericDate(time.Now()),
-		ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
-		ID:        fmt.Sprint(userId),
+type CustomClaims struct {
+	*jwt.RegisteredClaims
+	IsAdmin bool
+	UserId  uint
+}
+
+func GenerateJWT(u user.User, secret string) (string, CustomClaims, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, CustomClaims{
+		RegisteredClaims: &jwt.RegisteredClaims{
+			Issuer:    "proshop",
+			IssuedAt:  jwt.NewNumericDate(time.Now()),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
+		},
+		IsAdmin: u.IsAdmin,
+		UserId:  u.Id,
 	})
 	ss, err := token.SignedString([]byte(secret))
 	if err != nil {
-		return "", jwt.RegisteredClaims{}, err
+		return "", CustomClaims{}, err
 	}
 
-	return ss, token.Claims.(jwt.RegisteredClaims), nil
+	return ss, token.Claims.(CustomClaims), nil
 
 }
 
-func VerifyJWT(token string, secret string) (string, error) {
-	t, err := jwt.ParseWithClaims(token, &jwt.RegisteredClaims{}, func(t *jwt.Token) (interface{}, error) {
+func VerifyJWT(token string, secret string) (*CustomClaims, error) {
+	t, err := jwt.ParseWithClaims(token, &CustomClaims{}, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
 		}
@@ -32,13 +42,13 @@ func VerifyJWT(token string, secret string) (string, error) {
 		return []byte(secret), nil
 	})
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	if claims, ok := t.Claims.(*jwt.RegisteredClaims); ok && t.Valid {
-		return claims.ID, nil
+	if claims, ok := t.Claims.(*CustomClaims); ok && t.Valid {
+		return claims, nil
 	}
 
-	return "", fmt.Errorf("invalid Token")
+	return nil, fmt.Errorf("invalid Token")
 
 }

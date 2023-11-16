@@ -30,6 +30,7 @@ func Load(r *gin.Engine, uh *handlers.AuthHandler, l *zap.Logger) {
 	})
 
 	r.POST("/v1/auth/login", uh.Login)
+	r.POST("/v1/auth/logout", uh.Logout)
 	r.POST("/v1/auth", uh.ValidateRequest)
 	r.GET("/v1/config/paypal", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{

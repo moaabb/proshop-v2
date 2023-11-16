@@ -16,11 +16,11 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const [logoutApiCall] = useLogoutMutation();
+  const [logoutApiCall] = useLogoutMutation();
 
   const logoutHandler = async () => {
     try {
-      // await logoutApiCall().unwrap();
+      await logoutApiCall().unwrap();
       dispatch(logout());
       // NOTE: here we need to reset cart state for when a user logs out so the next
       // user doesn't inherit the previous users cart and shipping

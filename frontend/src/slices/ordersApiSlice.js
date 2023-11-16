@@ -4,26 +4,26 @@ import { ORDERS_URL, PAYPAL_URL } from '../constants';
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createOrder: builder.mutation({
-      query: ({ order, token }) => ({
+      query: ({ order }) => ({
         url: `${ORDERS_URL}/v1/orders`,
+        credentials: 'include',
         method: 'POST',
         body: order,
-        headers: { Authorization: `Bearer ${token}` },
       }),
     }),
     getOrderDetails: builder.query({
-      query: ({ orderId, token }) => ({
+      query: ({ orderId }) => ({
         url: `${ORDERS_URL}/v1/orders/${orderId}`,
-        headers: { Authorization: `Bearer ${token}` },
+        credentials: 'include',
       }),
       keepUnusedDataFor: 5,
     }),
     payOrder: builder.mutation({
-      query: ({ orderId, details, token }) => ({
+      query: ({ orderId, details }) => ({
         url: `${ORDERS_URL}/v1/orders/${orderId}/pay`,
+        credentials: 'include',
         method: 'PUT',
         body: details,
-        headers: { Authorization: `Bearer ${token}` },
       }),
     }),
     getPaypalClientId: builder.query({
@@ -33,25 +33,24 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     getMyOrders: builder.query({
-      query: (token) => ({
+      query: () => ({
         url: `${ORDERS_URL}/v1/users/orders`,
-        headers: { Authorization: `Bearer ${token}` },
-        credentials: "include"
+        credentials: 'include',
       }),
       keepUnusedDataFor: 5,
     }),
     getOrders: builder.query({
-      query: (token) => ({
+      query: () => ({
         url: `${ORDERS_URL}/v1/orders`,
-        headers: { Authorization: `Bearer ${token}` },
+        credentials: 'include',
       }),
       keepUnusedDataFor: 5,
     }),
     deliverOrder: builder.mutation({
-      query: ({ orderId, token }) => ({
+      query: ({ orderId }) => ({
         url: `${ORDERS_URL}/v1/orders/${orderId}/deliver`,
+        credentials: 'include',
         method: 'PUT',
-        headers: { Authorization: `Bearer ${token}` },
       }),
     }),
   }),

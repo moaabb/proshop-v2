@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin" // Import Gin instead of Fiber
 	"github.com/moaabb/ecommerce/auth_svc/domain/user"
@@ -51,7 +52,7 @@ func (ah *AuthHandler) Login(c *gin.Context) {
 		return
 	}
 
-	token, _, err := utils.GenerateJWT(user.Id, ah.cfg.JwtSecret)
+	token, _, err := utils.GenerateJWT(user, ah.cfg.JwtSecret)
 	if err != nil {
 		ah.l.Error("error generating password", zap.Error(err))
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "internal server error"})
@@ -61,7 +62,8 @@ func (ah *AuthHandler) Login(c *gin.Context) {
 	http.SetCookie(c.Writer, &http.Cookie{
 		Name:     "jwt",
 		Value:    token,
-		Domain:   "192.168.0.110",
+		Domain:   "172.21.193.94",
+		Expires:  time.Now().Add(time.Hour * 24),
 		Path:     "/",
 		HttpOnly: true,
 		SameSite: http.SameSiteStrictMode,
@@ -71,6 +73,24 @@ func (ah *AuthHandler) Login(c *gin.Context) {
 	user.Password = ""
 
 	c.JSON(http.StatusOK, user)
+}
+
+func (ah *AuthHandler) Logout(c *gin.Context) {
+
+	http.SetCookie(c.Writer, &http.Cookie{
+		Name:     "jwt",
+		Value:    "",
+		Domain:   "172.21.193.94",
+		Expires:  time.Now().Add(time.Hour * -1),
+		Path:     "/",
+		HttpOnly: true,
+		SameSite: http.SameSiteStrictMode,
+		Secure:   false,
+	})
+
+	ah.l.Info("deleting auth cookie...")
+
+	c.JSON(http.StatusOK, gin.H{})
 }
 
 func (ah *AuthHandler) ValidateRequest(c *gin.Context) {
@@ -84,7 +104,7 @@ func (ah *AuthHandler) ValidateRequest(c *gin.Context) {
 		return
 	}
 
-	userId, err := utils.VerifyJWT(token[1], ah.cfg.JwtSecret)
+	claims, err := utils.VerifyJWT(token[1], ah.cfg.JwtSecret)
 	if err != nil {
 		ah.l.Error("invalid token", zap.Error(err))
 		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
@@ -94,7 +114,13 @@ func (ah *AuthHandler) ValidateRequest(c *gin.Context) {
 	}
 
 	ah.l.Info("request validated")
-	c.JSON(http.StatusOK, gin.H{
-		"userId": userId,
+	c.JSON(http.StatusOK, &AuthResult{
+		UserId:  claims.UserId,
+		IsAdmin: claims.IsAdmin,
 	})
+}
+
+type AuthResult struct {
+	UserId  uint `json:"userId"`
+	IsAdmin bool `json:"isAdmin"`
 }
