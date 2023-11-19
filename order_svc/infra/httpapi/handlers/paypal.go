@@ -92,7 +92,7 @@ func (oh *OrderHandler) validatePaypalPayment(o order.Order, orderId string) err
 		return err
 	}
 
-	oh.l.Info(fmt.Sprintf("%v", paypalOrder))
+	oh.l.Info("Got response from paypal")
 	if paypalOrder.Status == "COMPLETED" && paypalOrder.PurchaseUnits[0].Amount.Value == o.TotalPrice {
 		return nil
 	}

@@ -11,7 +11,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func Load(r *gin.Engine, oh *handlers.OrderHandler, l *zap.Logger) {
+func Load(r *gin.Engine, oh *handlers.OrderHandler, l *zap.Logger, am *middleware.AuthMiddleware) {
 	r.Use(func(c *gin.Context) {
 		l.Info(fmt.Sprintf("%s %s", c.Request.Method, c.Request.URL))
 		c.Next()
@@ -23,18 +23,14 @@ func Load(r *gin.Engine, oh *handlers.OrderHandler, l *zap.Logger) {
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://172.21.193.94:8080"
-		},
-		MaxAge: 12 * time.Hour,
+		MaxAge:           12 * time.Hour,
 	}))
 
-	r.GET("/v1/orders", middleware.Authenticate(l), oh.GetAll)
-	r.GET("/v1/users/orders", middleware.Authenticate(l), oh.GetByUserId)
-	// r.GET("/v1/users/orders/:id", middleware.Admin(l), middleware.Authenticate(l), oh.GetByUserId)
-	r.POST("/v1/orders", middleware.Authenticate(l), oh.Create)
-	r.GET("/v1/orders/:id", middleware.Authenticate(l), oh.GetById)
-	r.PUT("/v1/orders/:id/pay", middleware.Authenticate(l), oh.UpdateToPaid)
-	r.PUT("/v1/orders/:id", middleware.Authenticate(l), oh.Update)
-	r.DELETE("/v1/orders/:id", middleware.Admin(l), middleware.Authenticate(l), oh.Delete)
+	r.GET("/v1/orders", am.Authenticate(), oh.GetAll)
+	r.GET("/v1/users/orders", am.Authenticate(), oh.GetByUserId)
+	r.POST("/v1/orders", am.Authenticate(), oh.Create)
+	r.GET("/v1/orders/:id", am.Authenticate(), oh.GetById)
+	r.PUT("/v1/orders/:id/pay", am.Authenticate(), oh.UpdateToPaid)
+	r.PUT("/v1/orders/:id/deliver", am.Authenticate(), am.Admin(), oh.UpdateToDelivered)
+	r.DELETE("/v1/orders/:id", am.Admin(), am.Authenticate(), oh.Delete)
 }

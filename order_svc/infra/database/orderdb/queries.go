@@ -48,6 +48,14 @@ var UpdateOrderToPaid = `
     updated_at = $7
     WHERE id = $8
 `
+var UpdateOrderToDelivered = `
+  UPDATE orders
+  SET
+    is_delivered = $1,
+    delivered_at = $2,
+    updated_at = $3
+    WHERE id = $4
+`
 
 var UpdateOrder = `UPDATE orders
 SET

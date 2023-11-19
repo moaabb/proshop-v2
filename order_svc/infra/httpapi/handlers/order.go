@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin" // Import Gin instead of Fiber
 	"github.com/moaabb/ecommerce/order_svc/domain/order"
@@ -143,4 +144,28 @@ func (oh *OrderHandler) Delete(c *gin.Context) {
 	}
 
 	c.Status(http.StatusNoContent)
+}
+
+func (oh *OrderHandler) UpdateToDelivered(c *gin.Context) {
+	oh.l.Info("Getting order ID...")
+	orderID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		oh.l.Error("Error getting order ID", zap.Error(err))
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Could not update order"})
+		return
+	}
+
+	var updatedOrder order.Order
+	updatedOrder.IsDelivered = true
+	updatedOrder.DeliveredAt = time.Now()
+
+	oh.l.Info("Updating order in the database")
+	updatedOrder, err = oh.repository.UpdateToDelivered(uint(orderID), updatedOrder)
+	if err != nil {
+		oh.l.Error("Error while updating order", zap.Error(err))
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "Could not update order"})
+		return
+	}
+
+	c.JSON(http.StatusOK, updatedOrder)
 }

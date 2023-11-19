@@ -62,12 +62,12 @@ func (ah *AuthHandler) Login(c *gin.Context) {
 	http.SetCookie(c.Writer, &http.Cookie{
 		Name:     "jwt",
 		Value:    token,
-		Domain:   "10.0.0.9",
+		Domain:   ah.cfg.Domain,
 		Expires:  time.Now().Add(time.Hour * 24),
 		Path:     "/",
 		HttpOnly: true,
 		SameSite: http.SameSiteStrictMode,
-		Secure:   false,
+		Secure:   ah.cfg.SecureCookie,
 	})
 
 	user.Password = ""
@@ -80,12 +80,12 @@ func (ah *AuthHandler) Logout(c *gin.Context) {
 	http.SetCookie(c.Writer, &http.Cookie{
 		Name:     "jwt",
 		Value:    "",
-		Domain:   "10.0.0.9",
+		Domain:   ah.cfg.Domain,
 		Expires:  time.Now().Add(time.Hour * -1),
 		Path:     "/",
 		HttpOnly: true,
 		SameSite: http.SameSiteStrictMode,
-		Secure:   false,
+		Secure:   ah.cfg.SecureCookie,
 	})
 
 	ah.l.Info("deleting auth cookie...")

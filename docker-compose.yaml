@@ -81,6 +81,7 @@ services:
         environment:
             PORT: :8080
             DB_URL: 'postgres://moab:supersecure@db:5432/ecommerce'
+            AUTH_SVC_URL: auth:8080
         ports:
             - 5000:8080
 
@@ -90,9 +91,11 @@ services:
         image: auth-service-api
         environment:
             PORT: :8080
+            DOMAIN: '10.0.0.9'
             DB_URL: 'postgres://moab:supersecure@db:5432/ecommerce'
             JWT_SECRET: supersecrekey
             PAYPAL_CLIENT_ID: AXAMRqBifFfLVEeDfz9MfA33RCV6J7EZ34c_nN_zte04m6JWGC6UQBbaK_oZZw-vZr9mEU0eUs4UH2rC
+            SECURE_COOKIE: 'false'
         ports:
             - 2020:8080
 
@@ -103,6 +106,7 @@ services:
         environment:
             PORT: :8080
             DB_URL: 'postgres://moab:supersecure@db:5432/ecommerce'
+            AUTH_SVC_URL: auth:8080
         ports:
             - 5050:8080
 
@@ -116,6 +120,7 @@ services:
             PAYPAL_CLIENT_ID: AXAMRqBifFfLVEeDfz9MfA33RCV6J7EZ34c_nN_zte04m6JWGC6UQBbaK_oZZw-vZr9mEU0eUs4UH2rC
             PAYPAL_SECRET_ID: EGRLpTC8KA2rKNBenC_wv3ThOunK72f3Ji9mzn-uX73fRBHScAEHpnfK10EXtlWFM7fhQrlmfaBXCxPr
             PAYPAL_BASE_URL: api-m.sandbox.paypal.com
+            AUTH_SVC_URL: auth:8080
         ports:
             - 8080:8080
 
