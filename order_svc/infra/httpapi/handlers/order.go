@@ -6,18 +6,21 @@ import (
 
 	"github.com/gin-gonic/gin" // Import Gin instead of Fiber
 	"github.com/moaabb/ecommerce/order_svc/domain/order"
+	"github.com/moaabb/ecommerce/order_svc/infra/config"
 	"github.com/moaabb/ecommerce/order_svc/infra/database/orderdb"
 	"go.uber.org/zap"
 )
 
 type OrderHandler struct {
 	repository order.Repository
+	cfg        *config.Config
 	l          *zap.Logger
 }
 
-func NewOrderHandler(repo *orderdb.Repository, z *zap.Logger) *OrderHandler {
+func NewOrderHandler(repo *orderdb.Repository, z *zap.Logger, cfg *config.Config) *OrderHandler {
 	return &OrderHandler{
 		repository: repo,
+		cfg:        cfg,
 		l:          z,
 	}
 }

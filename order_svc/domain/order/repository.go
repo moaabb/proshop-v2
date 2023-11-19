@@ -5,6 +5,7 @@ type Repository interface {
 	GetByUserId(id uint) ([]Order, error)
 	GetAll() ([]Order, error)
 	Create(order Order) (Order, error)
-	Update(pid uint, order Order) (Order, error)
+	Update(orderId uint, order Order) (Order, error)
+	UpdateToPaid(orderId uint, order Order) (Order, error)
 	Delete(id uint) error
 }

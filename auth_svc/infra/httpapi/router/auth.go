@@ -2,7 +2,6 @@ package router
 
 import (
 	"fmt"
-	"net/http"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -11,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func Load(r *gin.Engine, uh *handlers.AuthHandler, l *zap.Logger) {
+func Load(r *gin.Engine, ah *handlers.AuthHandler, l *zap.Logger) {
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "PATCH", "PUT", "POST", "OPTIONS", "DELETE"},
@@ -29,13 +28,9 @@ func Load(r *gin.Engine, uh *handlers.AuthHandler, l *zap.Logger) {
 		c.Next()
 	})
 
-	r.POST("/v1/auth/login", uh.Login)
-	r.POST("/v1/auth/logout", uh.Logout)
-	r.POST("/v1/auth", uh.ValidateRequest)
-	r.GET("/v1/config/paypal", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"clientId": "AcjdJcMNmWX7kNFqHrJq2AhqimTEY5nhkgLP09Q7ZsJHgbzyD1FnlOk4bU4pE3agUcBaqNuhPXmVS44K",
-		})
-	})
+	r.POST("/v1/auth/login", ah.Login)
+	r.POST("/v1/auth/logout", ah.Logout)
+	r.POST("/v1/auth", ah.ValidateRequest)
+	r.GET("/v1/config/paypal", ah.GetPaypalConfig)
 
 }

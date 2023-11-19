@@ -1,6 +1,6 @@
 // export const BASE_URL =
 //   process.env.NODE_ENV === 'develeopment' ? 'http://localhost:5000' : '';
-export const BASE_URL = 'http://172.21.193.94:8000'; // If using proxy
+export const BASE_URL = 'http://10.0.0.9:8000'; // If using proxy
 export const PRODUCTS_URL = '/products';
 export const USERS_URL = '/users';
 export const AUTH_URL = '/auth';
