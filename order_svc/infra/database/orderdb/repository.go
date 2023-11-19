@@ -74,35 +74,7 @@ func (or *Repository) GetById(id uint) (order.Order, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
 
-	var o order.Order
-	err := or.db.QueryRowContext(ctx, GetOrderById, id).Scan(
-		&o.ID,
-		&o.UserID,
-		&o.ShippingAddress.Address,
-		&o.ShippingAddress.City,
-		&o.ShippingAddress.PostalCode,
-		&o.ShippingAddress.Country,
-		&o.PaymentMethod,
-		&o.PaymentID,
-		&o.PaymentStatus,
-		&o.PaymentUpdateTime,
-		&o.PaymentEmailAddress,
-		&o.ItemsPrice,
-		&o.TaxPrice,
-		&o.ShippingPrice,
-		&o.TotalPrice,
-		&o.IsPaid,
-		&o.PaidAt,
-		&o.IsDelivered,
-		&o.DeliveredAt,
-		&o.CreatedAt,
-		&o.UpdatedAt,
-		&o.User.Id,
-		&o.User.Name,
-		&o.User.Email,
-		&o.User.CreatedAt,
-		&o.User.UpdatedAt,
-	)
+	o, err := scanOrder(or.db.QueryRowContext(ctx, GetOrderById, id))
 	if err != nil {
 		return order.Order{}, err
 	}
@@ -141,7 +113,8 @@ func (or *Repository) Create(o order.Order) (order.Order, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*8)
 	defer cancel()
 
-	newOrder, err := scanOrder(or.db.QueryRowContext(ctx, CreateOrder,
+	var newOrder order.Order
+	err := or.db.QueryRowContext(ctx, CreateOrder,
 		o.UserID,
 		o.ShippingAddress.Address,
 		o.ShippingAddress.City,
@@ -162,15 +135,13 @@ func (or *Repository) Create(o order.Order) (order.Order, error) {
 		o.DeliveredAt,
 		time.Now(),
 		time.Now(),
-	))
+	).Scan(&newOrder.ID)
 	if err != nil {
 		return order.Order{}, err
 	}
 
-	var orderItems []order.OrderItem
 	for _, v := range o.OrderItems {
-		var newOi order.OrderItem
-		err = or.db.QueryRowContext(ctx, CreateOrderItem,
+		_, err = or.db.ExecContext(ctx, CreateOrderItem,
 			newOrder.ID,
 			v.Image,
 			v.ProductID,
@@ -178,23 +149,13 @@ func (or *Repository) Create(o order.Order) (order.Order, error) {
 			v.Price,
 			time.Now(),
 			time.Now(),
-		).Scan(
-			&newOi.ID,
-			&newOi.OrderID,
-			&newOi.Image,
-			&newOi.ProductID,
-			&newOi.Quantity,
-			&newOi.Price,
-			&newOi.CreatedAt,
-			&newOi.UpdatedAt,
 		)
 		if err != nil {
 			return order.Order{}, err
 		}
-		orderItems = append(orderItems, newOi)
 	}
 
-	newOrder.OrderItems = orderItems
+	newOrder, _ = or.GetById(uint(newOrder.ID))
 
 	return newOrder, nil
 }
@@ -229,6 +190,31 @@ func (or *Repository) Update(orderID uint, updatedOrder order.Order) (order.Orde
 	if err != nil {
 		return order.Order{}, err
 	}
+
+	return updatedOrder, nil
+}
+
+func (or *Repository) UpdateToPaid(orderID uint, updatedOrder order.Order) (order.Order, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+	defer cancel()
+
+	// Execute the update query
+	_, err := or.db.ExecContext(ctx, UpdateOrderToPaid,
+		updatedOrder.PaymentID,
+		updatedOrder.PaymentStatus,
+		updatedOrder.PaymentUpdateTime,
+		updatedOrder.PaymentEmailAddress,
+		updatedOrder.IsPaid,
+		updatedOrder.PaidAt,
+		time.Now(),
+		orderID,
+	)
+
+	if err != nil {
+		return order.Order{}, err
+	}
+
+	updatedOrder, _ = or.GetById(orderID)
 
 	return updatedOrder, nil
 }
@@ -273,6 +259,11 @@ func scanOrder(row interface{}) (order.Order, error) {
 			&o.DeliveredAt,
 			&o.CreatedAt,
 			&o.UpdatedAt,
+			&o.User.Id,
+			&o.User.Name,
+			&o.User.Email,
+			&o.User.CreatedAt,
+			&o.User.UpdatedAt,
 		)
 	case *sql.Rows:
 		err = row.Scan(
@@ -297,6 +288,11 @@ func scanOrder(row interface{}) (order.Order, error) {
 			&o.DeliveredAt,
 			&o.CreatedAt,
 			&o.UpdatedAt,
+			&o.User.Id,
+			&o.User.Name,
+			&o.User.Email,
+			&o.User.CreatedAt,
+			&o.User.UpdatedAt,
 		)
 
 	}

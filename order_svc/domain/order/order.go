@@ -6,7 +6,7 @@ import (
 
 type Order struct {
 	ID                  int64           `json:"id"`
-	UserID              int             `json:"userId"`
+	UserID              int             `json:"-"`
 	ShippingAddress     ShippingAddress `json:"shippingAddress"`
 	PaymentMethod       string          `json:"paymentMethod"`
 	PaymentID           string          `json:"paymentID"`

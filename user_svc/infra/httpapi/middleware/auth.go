@@ -48,7 +48,22 @@ func Authenticate(l *zap.Logger) gin.HandlerFunc {
 		}
 
 		c.Set("userId", a.UserId)
+		c.Set("isAdmin", a.IsAdmin)
 
 		c.Next()
+	}
+}
+
+func Admin(l *zap.Logger) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if c.GetBool("isAdmin") {
+			c.Next()
+			return
+		}
+
+		l.Error("user is not an admin")
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"error": "user cannot access this resource",
+		})
 	}
 }

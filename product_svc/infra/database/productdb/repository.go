@@ -3,6 +3,7 @@ package productdb
 import (
 	"context"
 	"database/sql"
+	"math"
 	"time"
 
 	"github.com/moaabb/ecommerce/product_svc/domain/product"
@@ -21,14 +22,20 @@ func NewRepository(db *sql.DB, l *zap.Logger) *Repository {
 	}
 }
 
-func (pr *Repository) getAll(query string, args ...interface{}) ([]product.Product, error) {
+func (pr *Repository) getProducts(query string, args ...interface{}) (product.GetProductsDto, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
+	var totalRecords float64
+	err := pr.db.QueryRowContext(ctx, GetTotalRecords).Scan(&totalRecords)
+	if err != nil {
+		pr.l.Error("error getting total product records")
+		return product.GetProductsDto{}, err
+	}
 
 	rows, err := pr.db.QueryContext(ctx, query, args...)
 	if err != nil {
 		pr.l.Error("error getting data", zap.Error(err))
-		return nil, err
+		return product.GetProductsDto{}, err
 	}
 	defer rows.Close()
 
@@ -38,25 +45,33 @@ func (pr *Repository) getAll(query string, args ...interface{}) ([]product.Produ
 		err := scanProduct(&p, rows)
 		if err != nil {
 			pr.l.Error("error getting product", zap.Error(err))
-			return nil, err
+			return product.GetProductsDto{}, err
 		}
 		products = append(products, p)
 	}
 
 	if err := rows.Err(); err != nil {
 		pr.l.Error("error getting data", zap.Error(err))
-		return nil, err
+		return product.GetProductsDto{}, err
 	}
 
-	return products, nil
+	return product.GetProductsDto{
+		Products: products,
+		Pages:    math.Ceil(totalRecords / 10),
+	}, nil
 }
 
 func (pr *Repository) GetTopProducts() ([]product.Product, error) {
-	return pr.getAll(GetTopProducts)
+	p, err := pr.getProducts(GetTopProducts)
+	if err != nil {
+		return nil, err
+	}
+
+	return p.Products, nil
 }
 
-func (pr *Repository) GetAll() ([]product.Product, error) {
-	return pr.getAll(GetProducts)
+func (pr *Repository) GetAll(page int) (product.GetProductsDto, error) {
+	return pr.getProducts(GetProducts, page)
 }
 
 func (pr *Repository) GetById(id uint) (product.Product, error) {
@@ -115,7 +130,19 @@ func (pr *Repository) Create(p product.Product) (product.Product, error) {
 	defer cancel()
 
 	var newProduct product.Product
-	err := scanProduct(&newProduct, pr.db.QueryRowContext(ctx, CreateProduct))
+	err := scanProduct(&newProduct, pr.db.QueryRowContext(ctx, CreateProduct,
+		p.Name,
+		p.Description,
+		p.Brand,
+		p.Category,
+		p.Image,
+		0,
+		0,
+		p.Price,
+		p.CountInStock,
+		time.Now(),
+		time.Now(),
+	))
 	if err != nil {
 		pr.l.Error("error creating product", zap.Error(err))
 		return product.Product{}, err

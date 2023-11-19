@@ -24,13 +24,22 @@ func NewHandler(repo *productdb.Repository, z *zap.Logger) *ProductHandler {
 }
 
 func (ph *ProductHandler) GetAll(c *gin.Context) {
+	ph.l.Info("getting page number...")
+	page := c.Query("pageNumber")
+	pn, err := strconv.Atoi(page)
+	if err != nil {
+		pn = 1
+	}
+
 	ph.l.Info("Fetching products on database")
-	products, err := ph.repository.GetAll()
+	products, err := ph.repository.GetAll(pn)
 	if err != nil {
 		ph.l.Error("error while fetching products", zap.Error(err))
 		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": "could not fetch products"})
 		return
 	}
+
+	products.Page = pn
 
 	c.JSON(http.StatusOK, products)
 }
@@ -69,7 +78,12 @@ func (ph *ProductHandler) GetById(c *gin.Context) {
 
 func (ph *ProductHandler) Create(c *gin.Context) {
 	var p product.Product
-	c.BindJSON(&p)
+	err := c.BindJSON(&p)
+	if err != nil {
+		ph.l.Error("error binding dto", zap.Error(err))
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, "invalid request")
+		return
+	}
 
 	ph.l.Info("Creating product on database")
 	product, err := ph.repository.Create(p)
@@ -92,6 +106,11 @@ func (ph *ProductHandler) Update(c *gin.Context) {
 
 	var p product.Product
 	c.BindJSON(&p)
+	if err != nil {
+		ph.l.Error("error binding dto", zap.Error(err))
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, "invalid request")
+		return
+	}
 
 	ph.l.Info("updating product on database")
 	product, err := ph.repository.Update(uint(productId), p)

@@ -62,7 +62,7 @@ func (ah *AuthHandler) Login(c *gin.Context) {
 	http.SetCookie(c.Writer, &http.Cookie{
 		Name:     "jwt",
 		Value:    token,
-		Domain:   "172.21.193.94",
+		Domain:   "10.0.0.9",
 		Expires:  time.Now().Add(time.Hour * 24),
 		Path:     "/",
 		HttpOnly: true,
@@ -80,7 +80,7 @@ func (ah *AuthHandler) Logout(c *gin.Context) {
 	http.SetCookie(c.Writer, &http.Cookie{
 		Name:     "jwt",
 		Value:    "",
-		Domain:   "172.21.193.94",
+		Domain:   "10.0.0.9",
 		Expires:  time.Now().Add(time.Hour * -1),
 		Path:     "/",
 		HttpOnly: true,
@@ -117,6 +117,12 @@ func (ah *AuthHandler) ValidateRequest(c *gin.Context) {
 	c.JSON(http.StatusOK, &AuthResult{
 		UserId:  claims.UserId,
 		IsAdmin: claims.IsAdmin,
+	})
+}
+
+func (ah *AuthHandler) GetPaypalConfig(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"clientId": ah.cfg.PaypalClientId,
 	})
 }
 

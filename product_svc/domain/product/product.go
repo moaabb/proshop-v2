@@ -17,3 +17,9 @@ type Product struct {
 	CreatedAt    time.Time `json:"createdAt"`
 	UpdatedAt    time.Time `json:"updatedAt"`
 }
+
+type GetProductsDto struct {
+	Products []Product `json:"products"`
+	Pages    float64   `json:"pages"`
+	Page     int       `json:"page"`
+}
