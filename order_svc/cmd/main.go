@@ -8,6 +8,7 @@ import (
 	"github.com/moaabb/ecommerce/order_svc/infra/database/orderdb"
 	"github.com/moaabb/ecommerce/order_svc/infra/httpapi"
 	"github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers"
+	"github.com/moaabb/ecommerce/order_svc/infra/httpapi/middleware"
 	"github.com/moaabb/ecommerce/order_svc/infra/httpapi/router"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
@@ -21,6 +22,7 @@ func main() {
 		config.Module,
 		router.Module,
 		handlers.Module,
+		middleware.Module,
 		fx.Provide(
 			zap.NewExample,
 		),

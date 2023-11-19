@@ -219,6 +219,27 @@ func (or *Repository) UpdateToPaid(orderID uint, updatedOrder order.Order) (orde
 	return updatedOrder, nil
 }
 
+func (or *Repository) UpdateToDelivered(orderID uint, updatedOrder order.Order) (order.Order, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+	defer cancel()
+
+	// Execute the update query
+	_, err := or.db.ExecContext(ctx, UpdateOrderToDelivered,
+		updatedOrder.IsDelivered,
+		updatedOrder.DeliveredAt,
+		time.Now(),
+		orderID,
+	)
+
+	if err != nil {
+		return order.Order{}, err
+	}
+
+	updatedOrder, _ = or.GetById(orderID)
+
+	return updatedOrder, nil
+}
+
 func (or *Repository) Delete(id uint) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 	defer cancel()
