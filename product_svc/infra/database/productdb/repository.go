@@ -3,9 +3,11 @@ package productdb
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"math"
 	"time"
 
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/moaabb/ecommerce/product_svc/domain/product"
 	"go.uber.org/zap"
 )
@@ -101,10 +103,11 @@ func (pr *Repository) GetById(id uint) (product.Product, error) {
 			&r.ID,
 			&r.Rating,
 			&r.Comment,
-			&r.UpdatedAt,
 			&r.ProductID,
 			&r.CreatedAt,
 			&r.UpdatedAt,
+			&r.User.Name,
+			&r.User.Email,
 		)
 		if err != nil {
 			pr.l.Error("error getting data", zap.Error(err))
@@ -180,6 +183,57 @@ func (pr *Repository) Update(pid uint, p product.Product) (product.Product, erro
 	}
 
 	return updatedProduct, nil
+}
+
+func (pr *Repository) CreateReview(review product.Review) (product.Review, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+	defer cancel()
+
+	var r product.Review
+	err := pr.db.QueryRowContext(ctx,
+		CreateReview,
+		review.Rating,
+		review.Comment,
+		review.UserID,
+		review.ProductID,
+		time.Now(),
+		time.Now(),
+	).Scan(
+		&r.ID,
+		&r.Rating,
+		&r.Comment,
+		&r.ProductID,
+		&r.CreatedAt,
+		&r.UpdatedAt,
+		&r.User.Name,
+		&r.User.Email,
+	)
+
+	if err != nil {
+		var pgErr *pgconn.PgError
+		errors.As(err, &pgErr)
+
+		if pgErr.Code == "23505" {
+			pr.l.Error("user already reviews this product", zap.Error(pgErr))
+			return product.Review{}, pgErr
+
+		} else {
+			pr.l.Error("error creating review", zap.Any("error", pgErr))
+			return product.Review{}, pgErr
+
+		}
+	}
+	p, _ := pr.GetById(uint(review.ProductID))
+
+	rating := ((p.Rating * float32(p.NumReviews)) + float32(review.Rating)) / (float32(p.NumReviews) + 1)
+
+	_, err = pr.db.ExecContext(ctx, UpdateRating, rating, p.NumReviews+1, review.ProductID)
+	if err != nil {
+		pr.l.Error("error updating product rating", zap.Error(err))
+		return product.Review{}, err
+	}
+
+	return r, nil
 }
 
 func (pr *Repository) Delete(id uint) error {

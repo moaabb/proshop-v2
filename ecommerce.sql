@@ -77,3 +77,5 @@ ALTER TABLE "reviews" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("id"
 ALTER TABLE "order_items" ADD FOREIGN KEY ("order_id") REFERENCES "orders" ("id");
 
 ALTER TABLE "order_items" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("id");
+
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_unique" UNIQUE(user_id, product_id);

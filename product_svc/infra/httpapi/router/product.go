@@ -27,6 +27,7 @@ func Load(r *gin.Engine, ph *handlers.ProductHandler, l *zap.Logger, am *middlew
 
 	r.GET("/v1/products", ph.GetAll)
 	r.POST("/v1/products", am.Authenticate(), am.Admin(), ph.Create)
+	r.POST("/v1/products/:id/reviews", am.Authenticate(), ph.CreateReview)
 	r.GET("/v1/products/top", ph.GetTopProducts)
 	r.GET("/v1/products/:id", ph.GetById)
 	r.PUT("/v1/products/:id", am.Authenticate(), am.Admin(), ph.Update)
