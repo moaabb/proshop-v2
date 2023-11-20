@@ -37,6 +37,16 @@ func (oh *OrderHandler) UpdateToPaid(c *gin.Context) {
 		return
 	}
 
+	isAdmin := c.GetBool("isAdmin")
+	currentUserId := c.GetUint("userId")
+	if !isAdmin && currentUserId != uint(o.User.Id) {
+		oh.l.Error("request from an existing user came from an different user that is not an admin")
+		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+			"error": "the user is not allowed to access this resource with explicitly deny",
+		})
+		return
+	}
+
 	err = oh.validatePaypalPayment(o, paymentInfo.ID)
 	if err != nil {
 		oh.l.Error("error updating order to paid", zap.Error(err))
@@ -72,7 +82,7 @@ func (oh *OrderHandler) validatePaypalPayment(o order.Order, orderId string) err
 		return err
 	}
 
-	req, err := http.NewRequest("GET", fmt.Sprintf("https://%v/v2/checkout/orders/%s", oh.cfg.PaypalBaseUrl, orderId), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("https://%s/v2/checkout/orders/%s", oh.cfg.PaypalBaseUrl, orderId), nil)
 	if err != nil {
 		oh.l.Error("error mounting request for payment", zap.Error(err))
 		return err

@@ -149,10 +149,10 @@ func (ph *ProductHandler) Update(c *gin.Context) {
 	}
 
 	var p product.Product
-	c.BindJSON(&p)
+	err = c.BindJSON(&p)
 	if err != nil {
 		ph.l.Error("error binding dto", zap.Error(err))
-		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, "invalid request")
+		c.AbortWithStatusJSON(http.StatusBadRequest, "invalid request")
 		return
 	}
 
