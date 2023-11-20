@@ -168,8 +168,6 @@ func (pr *Repository) Update(pid uint, p product.Product) (product.Product, erro
 			p.Brand,
 			p.Category,
 			p.Image,
-			p.NumReviews,
-			p.Rating,
 			p.Price,
 			p.CountInStock,
 			time.Now(),

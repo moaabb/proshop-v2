@@ -32,5 +32,5 @@ func Load(r *gin.Engine, oh *handlers.OrderHandler, l *zap.Logger, am *middlewar
 	r.GET("/v1/orders/:id", am.Authenticate(), oh.GetById)
 	r.PUT("/v1/orders/:id/pay", am.Authenticate(), oh.UpdateToPaid)
 	r.PUT("/v1/orders/:id/deliver", am.Authenticate(), am.Admin(), oh.UpdateToDelivered)
-	r.DELETE("/v1/orders/:id", am.Admin(), am.Authenticate(), oh.Delete)
+	r.DELETE("/v1/orders/:id", am.Authenticate(), am.Admin(), oh.Delete)
 }

@@ -78,6 +78,16 @@ func (oh *OrderHandler) GetById(c *gin.Context) {
 		return
 	}
 
+	isAdmin := c.GetBool("isAdmin")
+	currentUserId := c.GetUint("userId")
+	if !isAdmin && currentUserId != uint(order.User.Id) {
+		oh.l.Error("request from an existing user came from an different user that is not an admin")
+		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+			"error": "the user is not allowed to access this resource with explicitly deny",
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, order)
 }
 
@@ -123,7 +133,7 @@ func (oh *OrderHandler) Update(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, updatedOrder)
+	c.JSON(http.StatusOK, updatedOrder)
 }
 
 func (oh *OrderHandler) Delete(c *gin.Context) {

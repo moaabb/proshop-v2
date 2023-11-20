@@ -17,7 +17,7 @@ func GeneratePaypalToken(cfg *config.Config) (string, error) {
 
 	req, err := http.NewRequest("POST", fmt.Sprintf("https://%v/v1/oauth2/token", cfg.PaypalBaseUrl), strings.NewReader(data.Encode()))
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 
 	req.SetBasicAuth(cfg.PaypalClientId, cfg.PaypalSecretId)
@@ -25,13 +25,13 @@ func GeneratePaypalToken(cfg *config.Config) (string, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 
 	var paypalResponseDto order.PayPalAuthDTO
 	err = json.NewDecoder(resp.Body).Decode(&paypalResponseDto)
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 
 	return paypalResponseDto.AccessToken, nil

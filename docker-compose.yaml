@@ -50,6 +50,8 @@ services:
             - POSTGRES_USER=kong
             - POSTGRES_DB=kong
             - POSTGRES_PASSWORD=kongpass
+        volumes:
+            - kongdb:/var/lib/postgresql/data
 
     db:
         networks:
@@ -126,6 +128,7 @@ services:
 
 volumes:
     ecommercedb:
+    kongdb:
 
 networks:
     kong-net:

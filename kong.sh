@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Define the Kong Admin API URL
-KONG_ADMIN_API="http://10.0.0.9:8001"
+DOMAIN="10.0.0.9"
+KONG_ADMIN_API="http://$DOMAIN:8001"
 
 # Function to create a service
 create_service() {
@@ -29,23 +30,23 @@ create_route() {
 }
 
 # Define the services and routes
-create_service "order-service" "http://10.0.0.9:8080"
+create_service "order-service" "http://$DOMAIN:8080"
 create_route "order-route" "order-service" "/orders"
 
-create_service "product-service" "http://10.0.0.9:5000"
+create_service "product-service" "http://$DOMAIN:5000"
 create_route "product-route" "product-service" "/products"
 
-create_service "user-service" "http://10.0.0.9:5050"
+create_service "user-service" "http://$DOMAIN:5050"
 create_route "user-route" "user-service" "/users"
 
-create_service "auth-service" "http://10.0.0.9:2020"
+create_service "auth-service" "http://$DOMAIN:2020"
 create_route "auth-route" "auth-service" "/auth"
 
-echo "Configuration completed."
+echo "Creating CORS plugin"
 
-curl -X POST http://10.0.0.9:8001/plugins \
+curl -X POST http://$DOMAIN:8001/plugins \
    --data "name=cors"  \
-   --data "config.origins=http://10.0.0.9:3000"  \
+   --data "config.origins=http://$DOMAIN:3000"  \
    --data "config.origins=http://localhost:3000"  \
    --data "config.methods=GET"  \
    --data "config.methods=POST"  \
@@ -65,3 +66,6 @@ curl -X POST http://10.0.0.9:8001/plugins \
    --data "config.exposed_headers=Access-Control-Allow-Origin"  \
    --data "config.credentials=true"  \
    --data "config.max_age=3600"
+
+echo "Configuration completed."
+

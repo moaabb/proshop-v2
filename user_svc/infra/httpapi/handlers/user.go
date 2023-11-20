@@ -44,6 +44,16 @@ func (uh *UserHandler) GetById(c *gin.Context) {
 		return
 	}
 
+	isAdmin := c.GetBool("isAdmin")
+	currentUserId := c.GetUint("userId")
+	if !isAdmin && currentUserId != uint(userId) {
+		uh.l.Error("request from an existing user came from an different user that is not an admin")
+		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+			"error": "the user is not allowed to access this resource with explicitly deny",
+		})
+		return
+	}
+
 	uh.l.Info("Fetching User on database")
 	user, err := uh.repository.GetById(uint(userId))
 	if err != nil {
@@ -84,6 +94,16 @@ func (uh *UserHandler) Update(c *gin.Context) {
 	if err != nil {
 		uh.l.Error("error getting userId", zap.Error(err))
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": "could not update users"})
+		return
+	}
+
+	isAdmin := c.GetBool("isAdmin")
+	currentUserId := c.GetUint("userId")
+	if !isAdmin && currentUserId != uint(userId) {
+		uh.l.Error("request from an existing user came from an different user that is not an admin")
+		c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
+			"error": "the user is not allowed to access this resource with explicitly deny",
+		})
 		return
 	}
 
