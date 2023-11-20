@@ -112,6 +112,17 @@ services:
         ports:
             - 5050:8080
 
+    # asset:
+    #     networks:
+    #         - app
+    #     image: asset-service-api
+    #     environment:
+    #         PORT: ':6060'
+    #         AUTH_SVC_URL: 'auth:8080'
+    #         SAVE_FILE_BASE_PATH: '/home/moab/playground/proshop-v2/frontend/public'
+    #     ports:
+    #         - 6060:8080
+
     order:
         networks:
             - app

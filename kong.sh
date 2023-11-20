@@ -42,6 +42,9 @@ create_route "user-route" "user-service" "/users"
 create_service "auth-service" "http://$DOMAIN:2020"
 create_route "auth-route" "auth-service" "/auth"
 
+create_service "asset-service" "http://$DOMAIN:6060"
+create_route "asset-route" "asset-service" "/uploads"
+
 echo "Creating CORS plugin"
 
 curl -X POST http://$DOMAIN:8001/plugins \

@@ -69,6 +69,22 @@ docker_build(
     ]
 )
 
+# local_resource(
+#   'asset-service-api',
+#   'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o asset_svc/build/asset-service-api ./asset_svc/cmd/*.go'
+#   )
+
+# docker_build(
+#     'asset-service-api',
+#     context='./asset_svc',
+#     dockerfile='./asset_svc/Dockerfile',
+#     only=['./build'],
+#     live_update=[
+#         sync('./asset_svc/build', '/app/build'),
+#         restart_container()
+#     ]
+# )
+
 
 # Path to file
 docker_compose('./docker-compose.yaml')

@@ -1,6 +1,7 @@
-go 1.21.1
+go 1.21.4
 
 use (
+	./asset_svc
 	./auth_svc
 	./data
 	./order_svc
