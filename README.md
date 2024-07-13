@@ -12,23 +12,29 @@ There are a lot of problems in the code, i am aware of it, i just didn't have th
 
 ## Technologies so far
 
-- GO
-- Gin Gonic
-- PostgreSQL
-- Kong
-- Tilt for dev
-- Docker
+-   GO
+-   Gin Gonic
+-   PostgreSQL
+-   Kong
+-   Tilt for dev
+-   Docker
 
 <br>
 
 ## In the future i want to add
 
-- gRPC -> Communication between microservices
-- RabbitMQ with asynchronous requests
+-   gRPC -> Communication between microservices
+-   RabbitMQ with asynchronous requests
 
 ## How to run this locally
 
 For the backend you need to have Go and Tilt installed.
+
+If it's the first time you're running this:
+
+```bash
+$ make bootstrap
+```
 
 To Start:
 
@@ -44,6 +50,10 @@ $ make stop
 
 for the Frontend you will need to run the following:
 
+Start server
+
 ```bash
-$ cd ./frontend && npm i && npm start
+$ make frontend
 ```
+
+Use the server on your local lan, do not use localhost, because it was implemented in a way that auth works on wsl.

@@ -1,0 +1,1507 @@
+Tilt started on http://localhost:10350/
+v0.33.6, built 2023-09-29
+I0713 06:49:48.350933   44391 handler.go:232] Adding GroupVersion tilt.dev v1alpha1 to ResourceManager
+
+Initial Build
+Loading Tiltfile at: /home/moab/playground/proshop-v2/Tiltfile
+
+    [32m[32mHello World from tilt-avatars![0m
+
+    If this is your first time using Tilt and you'd like some guidance, we've got a tutorial to accompany this project:
+    https://docs.tilt.dev/tutorial
+
+    If you're feeling particularly adventurous, try opening `/home/moab/playground/proshop-v2/Tiltfile` in an editor and making some changes while Tilt is running.
+    What happens if you intentionally introduce a syntax error? Can you fix it?
+    
+Successfully loaded Tiltfile (147.189419ms)
+product-serv… │ 
+product-serv… │ Initial Build
+product-serv… │ Running cmd: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o product_svc/build/product-service-api ./product_svc/cmd/*.go
+user-service… │ 
+user-service… │ Initial Build
+user-service… │ Running cmd: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o user_svc/build/user-service-api ./user_svc/cmd/*.go
+order-servic… │ 
+order-servic… │ Initial Build
+order-servic… │ Running cmd: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o order_svc/build/order-service-api ./order_svc/cmd/*.go
+auth-service… │ 
+auth-service… │ Initial Build
+auth-service… │ Running cmd: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o auth_svc/build/auth-service-api ./auth_svc/cmd/*.go
+         auth │ 
+         auth │ Initial Build
+         auth │ STEP 1/2 — Building Dockerfile: [auth-service-api]
+         auth │ Building Dockerfile for platform linux/amd64:
+         auth │   FROM alpine
+         auth │   WORKDIR /app
+         auth │   ADD build build
+         auth │   ENTRYPOINT build/auth-service-api
+         auth │ 
+         auth │      Building image
+           db │ 
+           db │ Initial Build
+           db │ STEP 1/1 — Deploying
+kong-database │ 
+kong-database │ Initial Build
+kong-database │ STEP 1/1 — Deploying
+           db │  Network proshop-v2_app  Creating
+           db │  Network proshop-v2_app  Created
+           db │  Network proshop-v2_kong-net  Creating
+           db │  Network proshop-v2_kong-net  Created
+           db │  Container proshop-v2-db-1  Creating
+         auth │      [background] read source files
+         auth │      [1/3] FROM docker.io/library/alpine:latest@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0
+           db │  Container proshop-v2-db-1  Created
+           db │  Container proshop-v2-db-1  Starting
+         auth │      [background] read source files 24.52MB [done: 364ms]
+         auth │      [3/3] ADD build build [cached]
+         auth │      [2/3] WORKDIR /app [cached]
+         auth │      exporting to image
+         auth │ 
+         auth │ STEP 2/2 — Deploying
+           db │  Container proshop-v2-db-1  Started
+           db │ 
+           db │ PostgreSQL Database directory appears to contain a database; Skipping initialization
+           db │ 
+           db │ 2024-07-13 09:49:53.283 UTC [1] LOG:  starting PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+           db │ 2024-07-13 09:49:53.283 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+           db │ 2024-07-13 09:49:53.283 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+           db │ 2024-07-13 09:49:53.287 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+           db │ 2024-07-13 09:49:53.297 UTC [29] LOG:  database system was shut down at 2024-07-13 09:48:01 UTC
+           db │ 2024-07-13 09:49:53.316 UTC [1] LOG:  database system is ready to accept connections
+kong-database │  Container kong-database  Creating
+           db │ 
+           db │      Step 1 - 2.36s (Deploying)
+           db │      DONE IN: 2.36s 
+           db │ 
+        order │ 
+        order │ Initial Build
+        order │ STEP 1/2 — Building Dockerfile: [order-service-api]
+        order │ Building Dockerfile for platform linux/amd64:
+        order │   FROM alpine
+        order │   WORKDIR /app
+        order │   ADD build build
+        order │   ENTRYPOINT build/order-service-api
+        order │ 
+        order │      Building image
+kong-database │  Container kong-database  Created
+kong-database │  Container kong-database  Starting
+        order │      [background] read source files
+        order │      [1/3] FROM docker.io/library/alpine:latest@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0
+        order │      [background] read source files 25.06MB [done: 172ms]
+        order │      [3/3] ADD build build [cached]
+        order │      [2/3] WORKDIR /app [cached]
+        order │      exporting to image
+        order │      exporting to image [done: 13ms]
+        order │ 
+        order │ STEP 2/2 — Deploying
+kong-database │  Container kong-database  Started
+kong-database │ 
+kong-database │ PostgreSQL Database directory appears to contain a database; Skipping initialization
+kong-database │ 
+kong-database │ 2024-07-13 09:49:54.171 UTC [1] LOG:  starting PostgreSQL 13.15 (Debian 13.15-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+kong-database │ 2024-07-13 09:49:54.172 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+kong-database │ 2024-07-13 09:49:54.172 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+kong-database │ 2024-07-13 09:49:54.175 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+kong-database │ 2024-07-13 09:49:54.181 UTC [27] LOG:  database system was shut down at 2024-07-13 09:48:04 UTC
+kong-database │ 2024-07-13 09:49:54.194 UTC [1] LOG:  database system is ready to accept connections
+kong-database │ 
+kong-database │      Step 1 - 3.24s (Deploying)
+kong-database │      DONE IN: 3.24s 
+kong-database │ 
+   kong-setup │ 
+   kong-setup │ Initial Build
+   kong-setup │ STEP 1/1 — Deploying
+         auth │  Container proshop-v2-auth-1  Creating
+         auth │  Container proshop-v2-auth-1  Created
+         auth │  Container proshop-v2-auth-1  Starting
+         auth │  Container proshop-v2-auth-1  Started
+         auth │ [Fx] PROVIDE	*http.Server <= github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer()
+         auth │ [Fx] PROVIDE	*sql.DB <= github.com/moaabb/ecommerce/auth_svc/infra/database.ConnectDB()
+         auth │ [Fx] PROVIDE	*userdb.Repository <= github.com/moaabb/ecommerce/auth_svc/infra/database/userdb.NewRepository()
+         auth │ [Fx] PROVIDE	*config.Config <= github.com/moaabb/ecommerce/auth_svc/infra/config.NewConfig()
+         auth │ [Fx] PROVIDE	*gin.Engine <= github.com/moaabb/ecommerce/auth_svc/infra/httpapi/router.NewRouter()
+         auth │ [Fx] PROVIDE	*handlers.AuthHandler <= github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.NewHandler()
+         auth │ [Fx] PROVIDE	*zap.Logger <= go.uber.org/zap.NewExample()
+         auth │ [Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+         auth │ [Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+         auth │ [Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+         auth │ [Fx] INVOKE		main.main.func1()
+         auth │ [Fx] RUN	provide: go.uber.org/fx.New.func1()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/config.NewConfig()
+         auth │ [Fx] RUN	provide: go.uber.org/zap.NewExample()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/database.ConnectDB()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/database/userdb.NewRepository()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.NewHandler()
+         auth │ [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+         auth │  - using env:	export GIN_MODE=release
+         auth │  - using code:	gin.SetMode(gin.ReleaseMode)
+         auth │ 
+         auth │ [GIN-debug] POST   /v1/auth/login            --> github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.(*AuthHandler).Login-fm (3 handlers)
+         auth │ [GIN-debug] POST   /v1/auth/logout           --> github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.(*AuthHandler).Logout-fm (3 handlers)
+         auth │ [GIN-debug] POST   /v1/auth                  --> github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.(*AuthHandler).ValidateRequest-fm (3 handlers)
+         auth │ [GIN-debug] GET    /v1/config/paypal         --> github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.(*AuthHandler).GetPaypalConfig-fm (3 handlers)
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/httpapi/router.NewRouter()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer()
+         auth │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer.func1() executing (caller: github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer)
+         auth │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer.func1() called by github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer ran successfully in 11.171µs
+         auth │ 2024/07/13 09:49:54.838999 server.go:23: [Info] Application running on port 8080
+         auth │ [Fx] RUNNING
+        order │  Container proshop-v2-order-1  Creating
+         auth │ 
+         auth │      Step 1 - 1.92s (Building Dockerfile: [auth-service-api])
+         auth │      Step 2 - 2.04s (Deploying)
+         auth │      DONE IN: 3.98s 
+         auth │ 
+      pgadmin │ 
+      pgadmin │ Initial Build
+      pgadmin │ STEP 1/1 — Deploying
+        order │  Container proshop-v2-order-1  Created
+        order │  Container proshop-v2-order-1  Starting
+        order │  Container proshop-v2-order-1  Started
+        order │ [Fx] PROVIDE	*http.Server <= github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer()
+        order │ [Fx] PROVIDE	*sql.DB <= github.com/moaabb/ecommerce/order_svc/infra/database.ConnectDB()
+        order │ [Fx] PROVIDE	*orderdb.Repository <= github.com/moaabb/ecommerce/order_svc/infra/database/orderdb.NewRepository()
+        order │ [Fx] PROVIDE	*config.Config <= github.com/moaabb/ecommerce/order_svc/infra/config.NewConfig()
+        order │ [Fx] PROVIDE	*gin.Engine <= github.com/moaabb/ecommerce/order_svc/infra/httpapi/router.NewRouter()
+        order │ [Fx] PROVIDE	*handlers.OrderHandler <= github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.NewOrderHandler()
+        order │ [Fx] PROVIDE	*middleware.AuthMiddleware <= github.com/moaabb/ecommerce/order_svc/infra/httpapi/middleware.NewAuthMiddleware()
+        order │ [Fx] PROVIDE	*zap.Logger <= go.uber.org/zap.NewExample()
+        order │ [Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+        order │ [Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+        order │ [Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+        order │ [Fx] INVOKE		main.main.func1()
+        order │ [Fx] RUN	provide: go.uber.org/fx.New.func1()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/config.NewConfig()
+        order │ [Fx] RUN	provide: go.uber.org/zap.NewExample()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/database.ConnectDB()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/database/orderdb.NewRepository()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.NewOrderHandler()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/httpapi/middleware.NewAuthMiddleware()
+        order │ [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+        order │  - using env:	export GIN_MODE=release
+        order │  - using code:	gin.SetMode(gin.ReleaseMode)
+        order │ 
+        order │ [GIN-debug] GET    /v1/orders                --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).GetAll-fm (4 handlers)
+        order │ [GIN-debug] GET    /v1/users/orders          --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).GetByUserId-fm (4 handlers)
+        order │ [GIN-debug] POST   /v1/orders                --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).Create-fm (4 handlers)
+        order │ [GIN-debug] GET    /v1/orders/:id            --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).GetById-fm (4 handlers)
+        order │ [GIN-debug] PUT    /v1/orders/:id/pay        --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).UpdateToPaid-fm (4 handlers)
+        order │ [GIN-debug] PUT    /v1/orders/:id/deliver    --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).UpdateToDelivered-fm (5 handlers)
+        order │ [GIN-debug] DELETE /v1/orders/:id            --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).Delete-fm (5 handlers)
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/httpapi/router.NewRouter()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer()
+        order │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer.func1() executing (caller: github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer)
+        order │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer.func1() called by github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer ran successfully in 1.362µs
+        order │ 2024/07/13 09:49:55.475970 server.go:23: [Info] Application running on port 8080
+        order │ [Fx] RUNNING
+   kong-setup │  Container proshop-v2-kong-setup-1  Creating
+        order │ 
+        order │      Step 1 - 0.63s (Building Dockerfile: [order-service-api])
+        order │      Step 2 - 1.62s (Deploying)
+        order │      DONE IN: 2.26s 
+        order │ 
+      product │ 
+      product │ Initial Build
+      product │ STEP 1/2 — Building Dockerfile: [product-service-api]
+      product │ Building Dockerfile for platform linux/amd64:
+      product │   FROM alpine
+      product │   WORKDIR /app
+      product │   ADD build build
+      product │   ENTRYPOINT build/product-service-api
+      product │ 
+      product │      Building image
+   kong-setup │  Container proshop-v2-kong-setup-1  Created
+   kong-setup │  Container proshop-v2-kong-setup-1  Starting
+      product │      [background] read source files
+      product │      [1/3] FROM docker.io/library/alpine:latest@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0
+      product │      [background] read source files 25.01MB [done: 175ms]
+      product │      [3/3] ADD build build [cached]
+      product │      [2/3] WORKDIR /app [cached]
+      product │      exporting to image
+      product │ 
+      product │ STEP 2/2 — Deploying
+   kong-setup │  Container proshop-v2-kong-setup-1  Started
+      pgadmin │  Container proshop-v2-pgadmin-1  Creating
+   kong-setup │ 
+   kong-setup │      Step 1 - 2.13s (Deploying)
+   kong-setup │      DONE IN: 2.13s 
+   kong-setup │ 
+         kong │ 
+         kong │ Initial Build
+         kong │ STEP 1/1 — Deploying
+      pgadmin │  Container proshop-v2-pgadmin-1  Created
+      pgadmin │  Container proshop-v2-pgadmin-1  Starting
+      pgadmin │  Container proshop-v2-pgadmin-1  Started
+      product │  Container proshop-v2-product-1  Creating
+      pgadmin │ 
+      pgadmin │      Step 1 - 2.24s (Deploying)
+      pgadmin │      DONE IN: 2.24s 
+      pgadmin │ 
+         user │ 
+         user │ Initial Build
+         user │ STEP 1/2 — Building Dockerfile: [user-service-api]
+         user │ Building Dockerfile for platform linux/amd64:
+         user │   FROM alpine
+         user │   WORKDIR /app
+         user │   ADD build build
+         user │   ENTRYPOINT build/user-service-api
+         user │ 
+         user │      Building image
+      product │  Container proshop-v2-product-1  Created
+      product │  Container proshop-v2-product-1  Starting
+         user │      [1/3] FROM docker.io/library/alpine:latest@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0
+         user │      [background] read source files
+         user │      [background] read source files 25.01MB [done: 293ms]
+         user │      [3/3] ADD build build [cached]
+         user │      [2/3] WORKDIR /app [cached]
+         user │      exporting to image
+         user │ 
+         user │ STEP 2/2 — Deploying
+      product │  Container proshop-v2-product-1  Started
+      product │ [Fx] PROVIDE	*http.Server <= github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer()
+      product │ [Fx] PROVIDE	*sql.DB <= github.com/moaabb/ecommerce/product_svc/infra/database.ConnectDB()
+      product │ [Fx] PROVIDE	*productdb.Repository <= github.com/moaabb/ecommerce/product_svc/infra/database/productdb.NewRepository()
+      product │ [Fx] PROVIDE	*config.Config <= github.com/moaabb/ecommerce/product_svc/infra/config.NewConfig()
+      product │ [Fx] PROVIDE	*gin.Engine <= github.com/moaabb/ecommerce/product_svc/infra/httpapi/router.NewRouter()
+      product │ [Fx] PROVIDE	*middleware.AuthMiddleware <= github.com/moaabb/ecommerce/product_svc/infra/httpapi/middleware.NewAuthMiddleware()
+      product │ [Fx] PROVIDE	*handlers.ProductHandler <= github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.NewHandler()
+      product │ [Fx] PROVIDE	*zap.Logger <= go.uber.org/zap.NewExample()
+      product │ [Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+      product │ [Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+      product │ [Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+      product │ [Fx] INVOKE		main.main.func1()
+      product │ [Fx] RUN	provide: go.uber.org/fx.New.func1()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/config.NewConfig()
+      product │ [Fx] RUN	provide: go.uber.org/zap.NewExample()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/database.ConnectDB()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/database/productdb.NewRepository()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.NewHandler()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/httpapi/middleware.NewAuthMiddleware()
+      product │ [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+      product │  - using env:	export GIN_MODE=release
+      product │  - using code:	gin.SetMode(gin.ReleaseMode)
+      product │ 
+      product │ [GIN-debug] GET    /v1/products              --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).GetAll-fm (3 handlers)
+      product │ [GIN-debug] POST   /v1/products              --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).Create-fm (5 handlers)
+      product │ [GIN-debug] POST   /v1/products/:id/reviews  --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).CreateReview-fm (4 handlers)
+      product │ [GIN-debug] GET    /v1/products/top          --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).GetTopProducts-fm (3 handlers)
+      product │ [GIN-debug] GET    /v1/products/:id          --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).GetById-fm (3 handlers)
+      product │ [GIN-debug] PUT    /v1/products/:id          --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).Update-fm (5 handlers)
+      product │ [GIN-debug] DELETE /v1/products/:id          --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).Delete-fm (5 handlers)
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/httpapi/router.NewRouter()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer()
+      product │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer.func1() executing (caller: github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer)
+      product │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer.func1() called by github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer ran successfully in 11.321µs
+      product │ 2024/07/13 09:49:57.991045 server.go:23: [Info] Application running on port 8080
+      product │ [Fx] RUNNING
+      product │ 
+      product │      Step 1 - 0.46s (Building Dockerfile: [product-service-api])
+      product │      Step 2 - 2.09s (Deploying)
+      product │      DONE IN: 2.56s 
+      product │ 
+         kong │  Container proshop-v2-kong-1  Creating
+         kong │  Container proshop-v2-kong-1  Created
+         kong │  Container proshop-v2-kong-1  Starting
+         kong │  Container proshop-v2-kong-1  Started
+         kong │ 
+         kong │      Step 1 - 3.38s (Deploying)
+         kong │      DONE IN: 3.38s 
+         kong │ 
+         user │  Container proshop-v2-user-1  Creating
+         user │  Container proshop-v2-user-1  Created
+         user │  Container proshop-v2-user-1  Starting
+         user │  Container proshop-v2-user-1  Started
+         user │ [Fx] PROVIDE	*http.Server <= github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer()
+         user │ [Fx] PROVIDE	*sql.DB <= github.com/moaabb/ecommerce/user_svc/infra/database.ConnectDB()
+         user │ [Fx] PROVIDE	*userdb.Repository <= github.com/moaabb/ecommerce/user_svc/infra/database/userdb.NewRepository()
+         user │ [Fx] PROVIDE	*config.Config <= github.com/moaabb/ecommerce/user_svc/infra/config.NewConfig()
+         user │ [Fx] PROVIDE	*middleware.AuthMiddleware <= github.com/moaabb/ecommerce/user_svc/infra/httpapi/middleware.NewAuthMiddleware()
+         user │ [Fx] PROVIDE	*gin.Engine <= github.com/moaabb/ecommerce/user_svc/infra/httpapi/router.NewRouter()
+         user │ [Fx] PROVIDE	*handlers.UserHandler <= github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.NewHandler()
+         user │ [Fx] PROVIDE	*zap.Logger <= go.uber.org/zap.NewExample()
+         user │ [Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+         user │ [Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+         user │ [Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+         user │ [Fx] INVOKE		main.main.func1()
+         user │ [Fx] RUN	provide: go.uber.org/fx.New.func1()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/config.NewConfig()
+         user │ [Fx] RUN	provide: go.uber.org/zap.NewExample()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/database.ConnectDB()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/database/userdb.NewRepository()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.NewHandler()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/httpapi/middleware.NewAuthMiddleware()
+         user │ [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+         user │  - using env:	export GIN_MODE=release
+         user │  - using code:	gin.SetMode(gin.ReleaseMode)
+         user │ 
+         user │ [GIN-debug] GET    /v1/users                 --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).GetAll-fm (5 handlers)
+         user │ [GIN-debug] POST   /v1/users                 --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).Create-fm (3 handlers)
+         user │ [GIN-debug] GET    /v1/users/:id             --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).GetById-fm (4 handlers)
+         user │ [GIN-debug] PUT    /v1/users/:id             --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).Update-fm (4 handlers)
+         user │ [GIN-debug] DELETE /v1/users/:id             --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).Delete-fm (5 handlers)
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/httpapi/router.NewRouter()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer()
+         user │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer.func1() executing (caller: github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer)
+         user │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer.func1() called by github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer ran successfully in 19.126µs
+         user │ [Fx] RUNNING
+         user │ 2024/07/13 09:50:00.642835 server.go:23: [Info] Application running on port 8080
+         user │ 
+         user │      Step 1 - 0.65s (Building Dockerfile: [user-service-api])
+         user │      Step 2 - 3.03s (Deploying)
+         user │      DONE IN: 3.69s 
+         user │ 
+   kong-setup │ Database already bootstrapped
+         kong │ 2024/07/13 09:50:04 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ nginx: [warn] the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: [lua] init.lua:851: init(): [request-debug] token for request debugging: 6d734928-d076-4a6e-a12e-df318481b35a
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: using the "epoll" event method
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: openresty/1.21.4.2
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: OS: Linux 6.6.10-76060610-generic
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: start worker processes
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: start worker process 2381
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: start worker process 2382
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: start worker process 2383
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: start worker process 2384
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: start worker process 2385
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: start worker process 2386
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: start worker process 2387
+         kong │ 2024/07/13 09:50:04 [notice] 1#0: start worker process 2388
+         kong │ 2024/07/13 09:50:07 [notice] 2383#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2384#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2382#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2381#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2387#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2386#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2381#0: *4 [lua] warmup.lua:117: single_dao(): Preloading 'services' into the core_cache..., context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2388#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2385#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2381#0: *4 [lua] warmup.lua:166: single_dao(): finished preloading 'services' into the core_cache (in 0ms), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2384#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2382#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2384#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2383#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2382#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2383#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2387#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2386#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2387#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2388#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2381#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2386#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2381#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2388#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2385#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:50:07 [notice] 2385#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+      pgadmin │ NOTE: Configuring authentication for SERVER mode.
+      pgadmin │ 
+      pgadmin │ pgAdmin 4 - Application Initialisation
+      pgadmin │ ======================================
+      pgadmin │ 
+      pgadmin │ postfix/postlog: starting the Postfix mail system
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/ HTTP/1.1" 201 378 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/order-service/routes HTTP/1.1" 201 485 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/ HTTP/1.1" 201 380 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/product-service/routes HTTP/1.1" 201 489 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/ HTTP/1.1" 201 377 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/user-service/routes HTTP/1.1" 201 483 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/ HTTP/1.1" 201 377 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/auth-service/routes HTTP/1.1" 201 482 "-" "curl/7.81.0"
+kong-database │ 2024-07-13 09:50:25.924 UTC [85] ERROR:  duplicate key value violates unique constraint "services_ws_id_name_unique"
+kong-database │ 2024-07-13 09:50:25.924 UTC [85] DETAIL:  Key (ws_id, name)=(a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c, asset-service) already exists.
+kong-database │ 2024-07-13 09:50:25.924 UTC [85] STATEMENT:  INSERT INTO "services" ("id", "created_at", "updated_at", "name", "retries", "protocol", "host", "port", "path", "connect_timeout", "write_timeout", "read_timeout", "tags", "client_certificate_id", "tls_verify", "tls_verify_depth", "ca_certificates", "enabled", "ws_id")
+kong-database │ 	     VALUES ('df873f84-19c9-49ec-8ed7-023bd6210fcf', TO_TIMESTAMP(1720864225) AT TIME ZONE 'UTC', TO_TIMESTAMP(1720864225) AT TIME ZONE 'UTC', 'asset-service', 5, 'http', '192.168.0.110', 6060, NULL, 60000, 60000, 60000, NULL, NULL, NULL, NULL, NULL, TRUE, 'a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c')
+kong-database │ 	  RETURNING "id", EXTRACT(EPOCH FROM "created_at" AT TIME ZONE 'UTC') AS "created_at", EXTRACT(EPOCH FROM "updated_at" AT TIME ZONE 'UTC') AS "updated_at", "name", "retries", "protocol", "host", "port", "path", "connect_timeout", "write_timeout", "read_timeout", "tags", "client_certificate_id", "tls_verify", "tls_verify_depth", "ca_certificates", "enabled", "ws_id";
+         kong │ 2024/07/13 09:50:25 [notice] 2381#0: *1208 [lua] init.lua:246: insert(): ERROR: duplicate key value violates unique constraint "services_ws_id_name_unique"
+         kong │ Key (ws_id, name)=(a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c, asset-service) already exists., client: 192.168.0.110, server: kong_admin, request: "POST /services/ HTTP/1.1", host: "192.168.0.110:8001"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/ HTTP/1.1" 409 149 "-" "curl/7.81.0"
+kong-database │ 2024-07-13 09:50:25.968 UTC [84] ERROR:  duplicate key value violates unique constraint "routes_ws_id_name_unique"
+kong-database │ 2024-07-13 09:50:25.968 UTC [84] DETAIL:  Key (ws_id, name)=(a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c, asset-route) already exists.
+kong-database │ 2024-07-13 09:50:25.968 UTC [84] STATEMENT:  INSERT INTO "routes" ("id", "created_at", "updated_at", "name", "protocols", "methods", "hosts", "paths", "headers", "https_redirect_status_code", "regex_priority", "strip_path", "path_handling", "preserve_host", "request_buffering", "response_buffering", "snis", "sources", "destinations", "tags", "service_id", "ws_id")
+kong-database │ 	     VALUES ('7295a0f2-9fe2-460e-aa83-08865131b76c', TO_TIMESTAMP(1720864225) AT TIME ZONE 'UTC', TO_TIMESTAMP(1720864225) AT TIME ZONE 'UTC', 'asset-route', ARRAY['http','https'], NULL, NULL, ARRAY['/uploads'], NULL, 426, 0, TRUE, 'v0', FALSE, TRUE, TRUE, NULL, NULL, NULL, NULL, 'd838d0c2-557d-43e6-a2a5-7ab9958e87c5', 'a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c')
+kong-database │ 	  RETURNING "id", EXTRACT(EPOCH FROM "created_at" AT TIME ZONE 'UTC') AS "created_at", EXTRACT(EPOCH FROM "updated_at" AT TIME ZONE 'UTC') AS "updated_at", "name", "protocols", "methods", "hosts", "paths", "headers", "https_redirect_status_code", "regex_priority", "strip_path", "path_handling", "preserve_host", "request_buffering", "response_buffering", "snis", "sources", "destinations", "tags", "service_id", "ws_id";
+         kong │ 2024/07/13 09:50:25 [notice] 2381#0: *1209 [lua] init.lua:246: insert(): ERROR: duplicate key value violates unique constraint "routes_ws_id_name_unique"
+         kong │ Key (ws_id, name)=(a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c, asset-route) already exists., client: 192.168.0.110, server: kong_admin, request: "POST /services/asset-service/routes HTTP/1.1", host: "192.168.0.110:8001"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:25 +0000] "POST /services/asset-service/routes HTTP/1.1" 409 145 "-" "curl/7.81.0"
+kong-database │ 2024-07-13 09:50:26.012 UTC [88] ERROR:  duplicate key value violates unique constraint "plugins_cache_key_key"
+kong-database │ 2024-07-13 09:50:26.012 UTC [88] DETAIL:  Key (cache_key)=(plugins:cors:::::a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c) already exists.
+kong-database │ 2024-07-13 09:50:26.012 UTC [88] STATEMENT:  INSERT INTO "plugins" ("id", "name", "instance_name", "created_at", "updated_at", "route_id", "service_id", "consumer_id", "consumer_group_id", "config", "protocols", "enabled", "tags", "ordering", "cache_key", "ws_id")
+kong-database │ 	     VALUES ('92eeea83-680f-4392-9323-a56cb60f90a0', 'cors', NULL, TO_TIMESTAMP(1720864226) AT TIME ZONE 'UTC', TO_TIMESTAMP(1720864226) AT TIME ZONE 'UTC', NULL, NULL, NULL, NULL, '{"preflight_continue":false,"credentials":true,"methods":["GET","POST","PATCH","PUT","DELETE","OPTIONS"],"private_network":false,"exposed_headers":["X-Auth-Token","Access-Control-Allow-Origin"],"headers":["Accept","Accept-Version","Content-Length","Content-MD5","Content-Type","Authorization","Date","X-Auth-Token"],"origins":["http://192.168.0.110:3000","http://localhost:3000"],"max_age":3600}', ARRAY['grpc','grpcs','http','https'], TRUE, NULL, NULL, 'plugins:cors:::::a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c', 'a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c')
+kong-database │ 	  RETURNING "id", "name", "instance_name", EXTRACT(EPOCH FROM "created_at" AT TIME ZONE 'UTC') AS "created_at", EXTRACT(EPOCH FROM "updated_at" AT TIME ZONE 'UTC') AS "updated_at", "route_id", "service_id", "consumer_id", "consumer_group_id", "config", "protocols", "enabled", "tags", "ordering", "ws_id";
+         kong │ 2024/07/13 09:50:26 [notice] 2381#0: *1210 [lua] init.lua:246: insert(): ERROR: duplicate key value violates unique constraint "plugins_cache_key_key"
+         kong │ Key (cache_key)=(plugins:cors:::::a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c) already exists., client: 192.168.0.110, server: kong_admin, request: "POST /plugins HTTP/1.1", host: "192.168.0.110:8001"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:50:26 +0000] "POST /plugins HTTP/1.1" 409 255 "-" "curl/7.81.0"
+      pgadmin │ [2024-07-13 09:50:32 +0000] [1] [INFO] Starting gunicorn 22.0.0
+      pgadmin │ [2024-07-13 09:50:32 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+      pgadmin │ [2024-07-13 09:50:32 +0000] [1] [INFO] Using worker: gthread
+      pgadmin │ [2024-07-13 09:50:32 +0000] [117] [INFO] Booting worker with pid: 117
+         kong │ 2024/07/13 09:50:37 [notice] 1#0: signal 3 (SIGQUIT) received, shutting down
+         kong │ 2024/07/13 09:50:37 [notice] 2386#0: gracefully shutting down
+         user │ [Fx] TERMINATED
+        order │ [Fx] TERMINATED
+        order │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer.func2() executing (caller: github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer)
+        order │ 2024/07/13 09:50:37.361126 server.go:30: [Info] stopping the server...
+        order │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer.func2() called by github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer ran successfully in 166.292µs
+         user │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer.func2() executing (caller: github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer)
+      product │ [Fx] TERMINATED
+      product │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer.func2() executing (caller: github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer)
+      product │ 2024/07/13 09:50:37.364250 server.go:30: [Info] stopping the server...
+      product │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer.func2() called by github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer ran successfully in 132.258µs
+         user │ 2024/07/13 09:50:37.351202 server.go:30: [Info] stopping the server...
+         user │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer.func2() called by github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer ran successfully in 258.146µs
+         kong │ 2024/07/13 09:50:37 [notice] 2381#0: gracefully shutting down
+         kong │ 2024/07/13 09:50:37 [notice] 2384#0: gracefully shutting down
+         kong │ 2024/07/13 09:50:37 [notice] 2382#0: gracefully shutting down
+         kong │ 2024/07/13 09:50:37 [notice] 2383#0: gracefully shutting down
+         kong │ 2024/07/13 09:50:37 [notice] 2385#0: gracefully shutting down
+         kong │ 2024/07/13 09:50:37 [notice] 2387#0: gracefully shutting down
+         kong │ 2024/07/13 09:50:37 [notice] 2388#0: gracefully shutting down
+           db │ 2024-07-13 09:50:37.367 UTC [1] LOG:  received fast shutdown request
+           db │ 2024-07-13 09:50:37.376 UTC [1] LOG:  aborting any active transactions
+           db │ 2024-07-13 09:50:37.376 UTC [34] FATAL:  terminating connection due to administrator command
+           db │ 2024-07-13 09:50:37.377 UTC [36] FATAL:  terminating connection due to administrator command
+           db │ 2024-07-13 09:50:37.377 UTC [38] FATAL:  terminating connection due to administrator command
+           db │ 2024-07-13 09:50:37.385 UTC [1] LOG:  background worker "logical replication launcher" (PID 32) exited with exit code 1
+      pgadmin │ [2024-07-13 09:50:37 +0000] [1] [INFO] Handling signal: term
+           db │ 2024-07-13 09:50:37.389 UTC [27] LOG:  shutting down
+           db │ 2024-07-13 09:50:37.390 UTC [27] LOG:  checkpoint starting: shutdown immediate
+         auth │ [Fx] TERMINATED
+         auth │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer.func2() executing (caller: github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer)
+         auth │ 2024/07/13 09:50:37.399051 server.go:30: [Info] stopping the server...
+         auth │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer.func2() called by github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer ran successfully in 159.25µs
+           db │ 2024-07-13 09:50:37.403 UTC [27] LOG:  checkpoint complete: wrote 16 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.006 s, total=0.015 s; sync files=12, longest=0.002 s, average=0.001 s; distance=4 kB, estimate=4 kB; lsn=0/197A928, redo lsn=0/197A928
+           db │ 2024-07-13 09:50:37.421 UTC [1] LOG:  database system is shut down
+         kong │ 2024/07/13 09:50:37 [notice] 2388#0: exiting
+         kong │ 2024/07/13 09:50:37 [notice] 2387#0: exiting
+         kong │ 2024/07/13 09:50:37 [notice] 2385#0: exiting
+         kong │ 2024/07/13 09:50:37 [notice] 2386#0: exiting
+         kong │ 2024/07/13 09:50:37 [notice] 2387#0: exit
+         kong │ 2024/07/13 09:50:38 [notice] 2381#0: exiting
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 17 (SIGCHLD) received from 2387
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: worker process 2387 exited with code 0
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:50:37 [notice] 2388#0: exit
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 17 (SIGCHLD) received from 2388
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: worker process 2388 exited with code 0
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:50:38 [notice] 2382#0: exiting
+         kong │ 2024/07/13 09:50:38 [notice] 2384#0: exiting
+         kong │ 2024/07/13 09:50:37 [notice] 2385#0: exit
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 17 (SIGCHLD) received from 2385
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: worker process 2385 exited with code 0
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:50:38 [notice] 2383#0: exiting
+         kong │ 2024/07/13 09:50:37 [notice] 2386#0: exit
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 17 (SIGCHLD) received from 2386
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: worker process 2386 exited with code 0
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:50:38 [notice] 2382#0: exit
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 17 (SIGCHLD) received from 2382
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: worker process 2382 exited with code 0
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:50:38 [notice] 2381#0: exit
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 17 (SIGCHLD) received from 2381
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: worker process 2381 exited with code 0
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:50:38 [notice] 2384#0: exit
+         kong │ 2024/07/13 09:50:38 [notice] 2383#0: exit
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 17 (SIGCHLD) received from 2384
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: worker process 2384 exited with code 0
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: signal 17 (SIGCHLD) received from 2383
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: worker process 2383 exited with code 0
+         kong │ 2024/07/13 09:50:38 [notice] 1#0: exit
+kong-database │ 2024-07-13 09:50:40.166 UTC [1] LOG:  received fast shutdown request
+kong-database │ 2024-07-13 09:50:40.168 UTC [1] LOG:  aborting any active transactions
+kong-database │ 2024-07-13 09:50:40.182 UTC [1] LOG:  background worker "logical replication launcher" (PID 33) exited with exit code 1
+kong-database │ 2024-07-13 09:50:40.183 UTC [28] LOG:  shutting down
+kong-database │ 2024-07-13 09:50:40.220 UTC [1] LOG:  database system is shut down
+Tilt started on http://localhost:10350/
+v0.33.6, built 2023-09-29
+Error: Tilt cannot start because you already have another process on port 10350
+If you want to run multiple Tilt instances simultaneously,
+use the --port flag or TILT_PORT env variable to set a custom port
+Original error: listen tcp 127.0.0.1:10350: bind: address already in use
+      pgadmin │ 
+      pgadmin │ Web Trigger
+      pgadmin │ STEP 1/2 — Force update
+      pgadmin │      No stopped containers
+      pgadmin │ 
+      pgadmin │ STEP 2/2 — Deploying
+      pgadmin │  Network proshop-v2_app  Creating
+      pgadmin │  Network proshop-v2_app  Created
+      pgadmin │  Network proshop-v2_kong-net  Creating
+      pgadmin │  Network proshop-v2_kong-net  Created
+      pgadmin │  Container proshop-v2-pgadmin-1  Creating
+      pgadmin │  Container proshop-v2-pgadmin-1  Created
+      pgadmin │  Container proshop-v2-pgadmin-1  Starting
+      pgadmin │  Container proshop-v2-pgadmin-1  Started
+      pgadmin │ 
+      pgadmin │      Step 1 - 0.20s (Force update)
+      pgadmin │      Step 2 - 1.36s (Deploying)
+      pgadmin │      DONE IN: 1.56s 
+      pgadmin │ 
+      pgadmin │ NOTE: Configuring authentication for SERVER mode.
+      pgadmin │ 
+      pgadmin │ pgAdmin 4 - Application Initialisation
+      pgadmin │ ======================================
+      pgadmin │ 
+      pgadmin │ postfix/postlog: starting the Postfix mail system
+      pgadmin │ [2024-07-13 09:52:38 +0000] [1] [INFO] Starting gunicorn 22.0.0
+      pgadmin │ [2024-07-13 09:52:38 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+      pgadmin │ [2024-07-13 09:52:38 +0000] [1] [INFO] Using worker: gthread
+      pgadmin │ [2024-07-13 09:52:38 +0000] [117] [INFO] Booting worker with pid: 117
+         kong │ 
+         kong │ Web Trigger
+         kong │ STEP 1/2 — Force update
+         kong │      No stopped containers
+         kong │ 
+         kong │ STEP 2/2 — Deploying
+         kong │  Container proshop-v2-kong-1  Creating
+         kong │  Container proshop-v2-kong-1  Created
+         kong │  Container proshop-v2-kong-1  Starting
+         kong │  Container proshop-v2-kong-1  Started
+         kong │ 
+         kong │      Step 1 - 0.18s (Force update)
+         kong │      Step 2 - 1.27s (Deploying)
+         kong │      DONE IN: 1.45s 
+         kong │ 
+         kong │ 2024/07/13 09:55:42 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ nginx: [warn] the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ 2024/07/13 09:55:42 [error] 1#0: init_by_lua error: /usr/local/share/lua/5.1/kong/init.lua:683: [PostgreSQL error] failed to retrieve PostgreSQL server_version_num: temporary failure in name resolution
+         kong │ stack traceback:
+         kong │ 	[C]: in function 'assert'
+         kong │ 	/usr/local/share/lua/5.1/kong/init.lua:683: in function 'init'
+         kong │ 	init_by_lua(nginx-kong.conf:53):3: in main chunk
+         kong │ nginx: [error] init_by_lua error: /usr/local/share/lua/5.1/kong/init.lua:683: [PostgreSQL error] failed to retrieve PostgreSQL server_version_num: temporary failure in name resolution
+         kong │ stack traceback:
+         kong │ 	[C]: in function 'assert'
+         kong │ 	/usr/local/share/lua/5.1/kong/init.lua:683: in function 'init'
+         kong │ 	init_by_lua(nginx-kong.conf:53):3: in main chunk
+           db │ 
+           db │ Web Trigger
+           db │ STEP 1/2 — Force update
+           db │      No stopped containers
+           db │ 
+           db │ STEP 2/2 — Deploying
+           db │  Container proshop-v2-db-1  Creating
+           db │  Container proshop-v2-db-1  Created
+           db │  Container proshop-v2-db-1  Starting
+           db │  Container proshop-v2-db-1  Started
+           db │ 
+           db │ PostgreSQL Database directory appears to contain a database; Skipping initialization
+           db │ 
+           db │ 2024-07-13 09:55:51.385 UTC [1] LOG:  starting PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+           db │ 2024-07-13 09:55:51.385 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+           db │ 2024-07-13 09:55:51.385 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+           db │ 2024-07-13 09:55:51.389 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+           db │ 2024-07-13 09:55:51.400 UTC [29] LOG:  database system was shut down at 2024-07-13 09:50:37 UTC
+           db │ 2024-07-13 09:55:51.413 UTC [1] LOG:  database system is ready to accept connections
+           db │ 
+           db │      Step 1 - 0.20s (Force update)
+           db │      Step 2 - 0.96s (Deploying)
+           db │      DONE IN: 1.17s 
+           db │ 
+kong-database │ 
+kong-database │ Web Trigger
+kong-database │ STEP 1/2 — Force update
+kong-database │      No stopped containers
+kong-database │ 
+kong-database │ STEP 2/2 — Deploying
+kong-database │  Container kong-database  Creating
+kong-database │  Container kong-database  Created
+kong-database │  Container kong-database  Starting
+kong-database │  Container kong-database  Started
+kong-database │ 
+kong-database │ PostgreSQL Database directory appears to contain a database; Skipping initialization
+kong-database │ 
+kong-database │ 2024-07-13 09:55:57.492 UTC [1] LOG:  starting PostgreSQL 13.15 (Debian 13.15-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+kong-database │ 2024-07-13 09:55:57.493 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+kong-database │ 2024-07-13 09:55:57.493 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+kong-database │ 2024-07-13 09:55:57.500 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+kong-database │ 2024-07-13 09:55:57.506 UTC [27] LOG:  database system was shut down at 2024-07-13 09:50:40 UTC
+kong-database │ 2024-07-13 09:55:57.521 UTC [1] LOG:  database system is ready to accept connections
+kong-database │ 
+kong-database │      Step 1 - 0.19s (Force update)
+kong-database │      Step 2 - 1.00s (Deploying)
+kong-database │      DONE IN: 1.19s 
+kong-database │ 
+         kong │ 
+         kong │ Web Trigger
+         kong │ STEP 1/2 — Force update
+         kong │       Container proshop-v2-kong-1  Stopping
+         kong │       Container proshop-v2-kong-1  Stopped
+         kong │       Container proshop-v2-kong-1  Removing
+         kong │       Container proshop-v2-kong-1  Removed
+         kong │ 
+         kong │ STEP 2/2 — Deploying
+         kong │  Container proshop-v2-kong-1  Creating
+         kong │  Container proshop-v2-kong-1  Created
+         kong │  Container proshop-v2-kong-1  Starting
+         kong │  Container proshop-v2-kong-1  Started
+         kong │ 
+         kong │      Step 1 - 0.21s (Force update)
+         kong │      Step 2 - 1.27s (Deploying)
+         kong │      DONE IN: 1.48s 
+         kong │ 
+         kong │ 2024/07/13 09:56:03 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ nginx: [warn] the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: [lua] init.lua:851: init(): [request-debug] token for request debugging: a3ef95fb-52c5-4d55-8df0-0725673cd7ed
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: using the "epoll" event method
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: openresty/1.21.4.2
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: OS: Linux 6.6.10-76060610-generic
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: start worker processes
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: start worker process 2381
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: start worker process 2382
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: start worker process 2383
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: start worker process 2384
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: start worker process 2385
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: start worker process 2386
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: start worker process 2387
+         kong │ 2024/07/13 09:56:03 [notice] 1#0: start worker process 2388
+         kong │ 2024/07/13 09:56:05 [notice] 2381#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2382#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2383#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2384#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2386#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2388#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2385#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2387#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2384#0: *3 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2384#0: *3 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2381#0: *1 [lua] warmup.lua:117: single_dao(): Preloading 'services' into the core_cache..., context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2384#0: *3 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2382#0: *2 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2382#0: *2 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2384#0: *3 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.008 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2382#0: *2 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2382#0: *2 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.008 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2381#0: *1 [lua] warmup.lua:166: single_dao(): finished preloading 'services' into the core_cache (in 0ms), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2384#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2382#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2386#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2383#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2388#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2385#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2384#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2386#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2382#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2388#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2383#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2385#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2387#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2381#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2387#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:05 [notice] 2381#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+
+1 File Changed: [docker-compose.yaml]
+Loading Tiltfile at: /home/moab/playground/proshop-v2/Tiltfile
+
+    [32m[32mHello World from tilt-avatars![0m
+
+    If this is your first time using Tilt and you'd like some guidance, we've got a tutorial to accompany this project:
+    https://docs.tilt.dev/tutorial
+
+    If you're feeling particularly adventurous, try opening `/home/moab/playground/proshop-v2/Tiltfile` in an editor and making some changes while Tilt is running.
+    What happens if you intentionally introduce a syntax error? Can you fix it?
+    
+Successfully loaded Tiltfile (18.205251ms)
+         kong │ 
+         kong │ 1 File Changed: [docker-compose.yaml]
+         kong │ STEP 1/1 — Deploying
+         kong │  Container proshop-v2-kong-1  Recreate
+         kong │ 2024/07/13 09:56:17 [notice] 1#0: signal 3 (SIGQUIT) received, shutting down
+         kong │ 2024/07/13 09:56:17 [notice] 2381#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:17 [notice] 2386#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:17 [notice] 2387#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:17 [notice] 2385#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:17 [notice] 2384#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:17 [notice] 2383#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:17 [notice] 2388#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:17 [notice] 2382#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:18 [notice] 2388#0: exiting
+         kong │ 2024/07/13 09:56:18 [notice] 2383#0: exiting
+         kong │ 2024/07/13 09:56:18 [notice] 2384#0: exiting
+         kong │ 2024/07/13 09:56:18 [notice] 2386#0: exiting
+         kong │ 2024/07/13 09:56:18 [notice] 2382#0: exiting
+         kong │ 2024/07/13 09:56:18 [notice] 2385#0: exiting
+         kong │ 2024/07/13 09:56:18 [notice] 2381#0: exiting
+         kong │ 2024/07/13 09:56:18 [notice] 2387#0: exiting
+         kong │ 2024/07/13 09:56:18 [notice] 2388#0: exit
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 17 (SIGCHLD) received from 2388
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: worker process 2388 exited with code 0
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:18 [notice] 2383#0: exit
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 17 (SIGCHLD) received from 2383
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: worker process 2383 exited with code 0
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:18 [notice] 2384#0: exit
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 17 (SIGCHLD) received from 2384
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: worker process 2384 exited with code 0
+         kong │ 2024/07/13 09:56:18 [notice] 2385#0: exit
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:18 [notice] 2382#0: exit
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 17 (SIGCHLD) received from 2385
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: worker process 2385 exited with code 0
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:18 [notice] 2381#0: exit
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 17 (SIGCHLD) received from 2382
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: worker process 2382 exited with code 0
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 17 (SIGCHLD) received from 2381
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: worker process 2381 exited with code 0
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:18 [notice] 2386#0: exit
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 17 (SIGCHLD) received from 2386
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: worker process 2386 exited with code 0
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:18 [notice] 2387#0: exit
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: signal 17 (SIGCHLD) received from 2387
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: worker process 2387 exited with code 0
+         kong │ 2024/07/13 09:56:18 [notice] 1#0: exit
+         kong │  Container proshop-v2-kong-1  Recreated
+         kong │  Container proshop-v2-kong-1  Starting
+         kong │  Container proshop-v2-kong-1  Started
+         kong │ 
+         kong │      Step 1 - 3.97s (Deploying)
+         kong │      DONE IN: 3.97s 
+         kong │ 
+         kong │ 2024/07/13 09:56:24 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ nginx: [warn] the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: [lua] init.lua:851: init(): [request-debug] token for request debugging: e0e33f14-f993-487a-b941-dd7b2b6bd4eb
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: using the "epoll" event method
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: openresty/1.21.4.2
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: OS: Linux 6.6.10-76060610-generic
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: start worker processes
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: start worker process 2381
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: start worker process 2382
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: start worker process 2383
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: start worker process 2384
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: start worker process 2385
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: start worker process 2386
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: start worker process 2387
+         kong │ 2024/07/13 09:56:24 [notice] 1#0: start worker process 2388
+         kong │ 2024/07/13 09:56:26 [notice] 2381#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2383#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2384#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2386#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2382#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2385#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2387#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2388#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2381#0: *1 [lua] warmup.lua:117: single_dao(): Preloading 'services' into the core_cache..., context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2386#0: *4 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2386#0: *4 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2386#0: *4 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2382#0: *5 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2386#0: *4 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.008 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2382#0: *5 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2382#0: *5 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2382#0: *5 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.008 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2381#0: *1 [lua] warmup.lua:166: single_dao(): finished preloading 'services' into the core_cache (in 0ms), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2384#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2383#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2386#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2385#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2383#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2386#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2388#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2384#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2387#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2382#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2381#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2385#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2387#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2388#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2382#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:56:27 [notice] 2381#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+
+1 File Changed: [docker-compose.yaml]
+Loading Tiltfile at: /home/moab/playground/proshop-v2/Tiltfile
+
+    [32m[32mHello World from tilt-avatars![0m
+
+    If this is your first time using Tilt and you'd like some guidance, we've got a tutorial to accompany this project:
+    https://docs.tilt.dev/tutorial
+
+    If you're feeling particularly adventurous, try opening `/home/moab/playground/proshop-v2/Tiltfile` in an editor and making some changes while Tilt is running.
+    What happens if you intentionally introduce a syntax error? Can you fix it?
+    
+Successfully loaded Tiltfile (17.202054ms)
+           db │ 
+           db │ 1 File Changed: [docker-compose.yaml]
+           db │ STEP 1/1 — Deploying
+kong-database │ 
+kong-database │ 1 File Changed: [docker-compose.yaml]
+kong-database │ STEP 1/1 — Deploying
+           db │  Container proshop-v2-db-1  Recreate
+           db │ 2024-07-13 09:56:31.105 UTC [1] LOG:  received fast shutdown request
+           db │ 2024-07-13 09:56:31.106 UTC [1] LOG:  aborting any active transactions
+           db │ 2024-07-13 09:56:31.122 UTC [1] LOG:  background worker "logical replication launcher" (PID 32) exited with exit code 1
+           db │ 2024-07-13 09:56:31.127 UTC [27] LOG:  shutting down
+           db │ 2024-07-13 09:56:31.130 UTC [27] LOG:  checkpoint starting: shutdown immediate
+           db │ 2024-07-13 09:56:31.144 UTC [27] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.003 s, total=0.017 s; sync files=2, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/197A9D8, redo lsn=0/197A9D8
+           db │ 2024-07-13 09:56:31.159 UTC [1] LOG:  database system is shut down
+           db │  Container proshop-v2-db-1  Recreated
+           db │  Container proshop-v2-db-1  Starting
+           db │  Container proshop-v2-db-1  Started
+           db │ 
+           db │ PostgreSQL Database directory appears to contain a database; Skipping initialization
+           db │ 
+           db │ 2024-07-13 09:56:32.391 UTC [1] LOG:  starting PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+           db │ 2024-07-13 09:56:32.392 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+           db │ 2024-07-13 09:56:32.392 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+           db │ 2024-07-13 09:56:32.396 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+           db │ 2024-07-13 09:56:32.408 UTC [29] LOG:  database system was shut down at 2024-07-13 09:56:31 UTC
+           db │ 2024-07-13 09:56:32.453 UTC [1] LOG:  database system is ready to accept connections
+kong-database │  Container kong-database  Recreate
+           db │ 
+           db │      Step 1 - 1.80s (Deploying)
+           db │      DONE IN: 1.80s 
+           db │ 
+kong-database │ 2024-07-13 09:56:32.855 UTC [1] LOG:  received fast shutdown request
+kong-database │ 2024-07-13 09:56:32.857 UTC [1] LOG:  aborting any active transactions
+kong-database │ 2024-07-13 09:56:32.857 UTC [138] FATAL:  terminating connection due to administrator command
+kong-database │ 2024-07-13 09:56:32.857 UTC [136] FATAL:  terminating connection due to administrator command
+kong-database │ 2024-07-13 09:56:32.857 UTC [134] FATAL:  terminating connection due to administrator command
+kong-database │ 2024-07-13 09:56:32.857 UTC [133] FATAL:  terminating connection due to administrator command
+kong-database │ 2024-07-13 09:56:32.857 UTC [137] FATAL:  terminating connection due to administrator command
+kong-database │ 2024-07-13 09:56:32.862 UTC [1] LOG:  background worker "logical replication launcher" (PID 33) exited with exit code 1
+kong-database │ 2024-07-13 09:56:32.868 UTC [28] LOG:  shutting down
+kong-database │ 2024-07-13 09:56:32.906 UTC [1] LOG:  database system is shut down
+kong-database │  Container kong-database  Recreated
+kong-database │  Container kong-database  Starting
+kong-database │  Container kong-database  Started
+kong-database │ 
+kong-database │ PostgreSQL Database directory appears to contain a database; Skipping initialization
+kong-database │ 
+kong-database │ 2024-07-13 09:56:33.923 UTC [1] LOG:  starting PostgreSQL 13.15 (Debian 13.15-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+kong-database │ 2024-07-13 09:56:33.923 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+kong-database │ 2024-07-13 09:56:33.923 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+kong-database │ 2024-07-13 09:56:33.927 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+kong-database │ 2024-07-13 09:56:33.935 UTC [27] LOG:  database system was shut down at 2024-07-13 09:56:32 UTC
+kong-database │ 2024-07-13 09:56:33.951 UTC [1] LOG:  database system is ready to accept connections
+kong-database │ 
+kong-database │      Step 1 - 3.29s (Deploying)
+kong-database │      DONE IN: 3.29s 
+kong-database │ 
+         kong │ 192.168.128.1 - - [13/Jul/2024:09:56:44 +0000] "DELETE /routes/order-route HTTP/1.1" 204 0 "-" "curl/7.81.0"
+         kong │ 192.168.128.1 - - [13/Jul/2024:09:56:44 +0000] "DELETE /services/order-service HTTP/1.1" 204 0 "-" "curl/7.81.0"
+         kong │ 192.168.128.1 - - [13/Jul/2024:09:56:44 +0000] "DELETE /routes/product-route HTTP/1.1" 204 0 "-" "curl/7.81.0"
+         kong │ 192.168.128.1 - - [13/Jul/2024:09:56:44 +0000] "DELETE /services/product-service HTTP/1.1" 204 0 "-" "curl/7.81.0"
+         kong │ 192.168.128.1 - - [13/Jul/2024:09:56:45 +0000] "DELETE /routes/user-route HTTP/1.1" 204 0 "-" "curl/7.81.0"
+         kong │ 192.168.128.1 - - [13/Jul/2024:09:56:45 +0000] "DELETE /services/user-service HTTP/1.1" 204 0 "-" "curl/7.81.0"
+         kong │ 192.168.128.1 - - [13/Jul/2024:09:56:45 +0000] "DELETE /routes/auth-route HTTP/1.1" 204 0 "-" "curl/7.81.0"
+         kong │ 192.168.128.1 - - [13/Jul/2024:09:56:45 +0000] "DELETE /services/auth-service HTTP/1.1" 204 0 "-" "curl/7.81.0"
+         kong │ 192.168.128.1 - - [13/Jul/2024:09:56:45 +0000] "DELETE /plugins/cors HTTP/1.1" 204 0 "-" "curl/7.81.0"
+           db │ 2024-07-13 09:56:48.974 UTC [1] LOG:  received fast shutdown request
+         kong │ 2024/07/13 09:56:48 [notice] 1#0: signal 3 (SIGQUIT) received, shutting down
+      pgadmin │ [2024-07-13 09:56:48 +0000] [1] [INFO] Handling signal: term
+         kong │ 2024/07/13 09:56:48 [notice] 2382#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:48 [notice] 2383#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:48 [notice] 2381#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:48 [notice] 2384#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:48 [notice] 2385#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:48 [notice] 2386#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:48 [notice] 2387#0: gracefully shutting down
+         kong │ 2024/07/13 09:56:48 [notice] 2388#0: gracefully shutting down
+           db │ 2024-07-13 09:56:48.984 UTC [1] LOG:  aborting any active transactions
+           db │ 2024-07-13 09:56:49.001 UTC [1] LOG:  background worker "logical replication launcher" (PID 32) exited with exit code 1
+           db │ 2024-07-13 09:56:49.001 UTC [27] LOG:  shutting down
+           db │ 2024-07-13 09:56:49.003 UTC [27] LOG:  checkpoint starting: shutdown immediate
+           db │ 2024-07-13 09:56:49.012 UTC [27] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.003 s, total=0.011 s; sync files=2, longest=0.002 s, average=0.002 s; distance=0 kB, estimate=0 kB; lsn=0/197AA88, redo lsn=0/197AA88
+           db │ 2024-07-13 09:56:49.025 UTC [1] LOG:  database system is shut down
+         kong │ 2024/07/13 09:56:49 [notice] 2384#0: exiting
+         kong │ 2024/07/13 09:56:49 [notice] 2383#0: exiting
+         kong │ 2024/07/13 09:56:49 [notice] 2386#0: exiting
+         kong │ 2024/07/13 09:56:49 [notice] 2387#0: exiting
+         kong │ 2024/07/13 09:56:49 [notice] 2385#0: exiting
+         kong │ 2024/07/13 09:56:49 [notice] 2382#0: exiting
+         kong │ 2024/07/13 09:56:49 [notice] 2388#0: exiting
+      pgadmin │ [2024-07-13 09:56:49 +0000] [117] [INFO] Worker exiting (pid: 117)
+         kong │ 2024/07/13 09:56:49 [notice] 2381#0: exiting
+         kong │ 2024/07/13 09:56:49 [notice] 2384#0: exit
+         kong │ 2024/07/13 09:56:49 [notice] 1#0: signal 17 (SIGCHLD) received from 2384
+         kong │ 2024/07/13 09:56:49 [notice] 1#0: worker process 2384 exited with code 0
+         kong │ 2024/07/13 09:56:49 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:49 [notice] 2383#0: exit
+         kong │ 2024/07/13 09:56:49 [notice] 2387#0: exit
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 17 (SIGCHLD) received from 2387
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: worker process 2387 exited with code 0
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 17 (SIGCHLD) received from 2383
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: worker process 2383 exited with code 0
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:49 [notice] 2382#0: exit
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 17 (SIGCHLD) received from 2382
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: worker process 2382 exited with code 0
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:49 [notice] 2386#0: exit
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 17 (SIGCHLD) received from 2386
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: worker process 2386 exited with code 0
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:49 [notice] 2385#0: exit
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 17 (SIGCHLD) received from 2385
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: worker process 2385 exited with code 0
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:49 [notice] 2388#0: exit
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 17 (SIGCHLD) received from 2388
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: worker process 2388 exited with code 0
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 09:56:49 [notice] 2381#0: exit
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: signal 17 (SIGCHLD) received from 2381
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: worker process 2381 exited with code 0
+         kong │ 2024/07/13 09:56:50 [notice] 1#0: exit
+      pgadmin │ [2024-07-13 09:56:51 +0000] [1] [INFO] Shutting down: Master
+kong-database │ 2024-07-13 09:56:52.014 UTC [1] LOG:  received fast shutdown request
+kong-database │ 2024-07-13 09:56:52.017 UTC [1] LOG:  aborting any active transactions
+kong-database │ 2024-07-13 09:56:52.022 UTC [1] LOG:  background worker "logical replication launcher" (PID 33) exited with exit code 1
+kong-database │ 2024-07-13 09:56:52.024 UTC [28] LOG:  shutting down
+kong-database │ 2024-07-13 09:56:52.085 UTC [1] LOG:  database system is shut down
+Tilt started on http://localhost:10350/
+v0.33.6, built 2023-09-29
+I0713 06:57:20.679058   65553 handler.go:232] Adding GroupVersion tilt.dev v1alpha1 to ResourceManager
+
+Initial Build
+Loading Tiltfile at: /home/moab/playground/proshop-v2/Tiltfile
+
+    [32m[32mHello World from tilt-avatars![0m
+
+    If this is your first time using Tilt and you'd like some guidance, we've got a tutorial to accompany this project:
+    https://docs.tilt.dev/tutorial
+
+    If you're feeling particularly adventurous, try opening `/home/moab/playground/proshop-v2/Tiltfile` in an editor and making some changes while Tilt is running.
+    What happens if you intentionally introduce a syntax error? Can you fix it?
+    
+Successfully loaded Tiltfile (132.054797ms)
+product-serv… │ 
+product-serv… │ Initial Build
+product-serv… │ Running cmd: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o product_svc/build/product-service-api ./product_svc/cmd/*.go
+user-service… │ 
+user-service… │ Initial Build
+user-service… │ Running cmd: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o user_svc/build/user-service-api ./user_svc/cmd/*.go
+order-servic… │ 
+order-servic… │ Initial Build
+order-servic… │ Running cmd: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o order_svc/build/order-service-api ./order_svc/cmd/*.go
+auth-service… │ 
+auth-service… │ Initial Build
+auth-service… │ Running cmd: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o auth_svc/build/auth-service-api ./auth_svc/cmd/*.go
+         auth │ 
+         auth │ Initial Build
+         auth │ STEP 1/2 — Building Dockerfile: [auth-service-api]
+         auth │ Building Dockerfile for platform linux/amd64:
+         auth │   FROM alpine
+         auth │   WORKDIR /app
+         auth │   ADD build build
+         auth │   ENTRYPOINT build/auth-service-api
+         auth │ 
+         auth │      Building image
+           db │ 
+           db │ Initial Build
+           db │ STEP 1/1 — Deploying
+kong-database │ 
+kong-database │ Initial Build
+kong-database │ STEP 1/1 — Deploying
+           db │  Network proshop-v2_kong-net  Creating
+           db │  Network proshop-v2_kong-net  Created
+           db │  Network proshop-v2_app  Creating
+           db │  Network proshop-v2_app  Created
+           db │  Container proshop-v2-db-1  Creating
+           db │  Container proshop-v2-db-1  Created
+           db │  Container proshop-v2-db-1  Starting
+         auth │      [background] read source files
+         auth │      [1/3] FROM docker.io/library/alpine:latest@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0
+           db │  Container proshop-v2-db-1  Started
+         auth │      [background] read source files 24.52MB [done: 272ms]
+         auth │      [3/3] ADD build build [cached]
+         auth │      [2/3] WORKDIR /app [cached]
+         auth │      exporting to image
+           db │ 
+           db │ PostgreSQL Database directory appears to contain a database; Skipping initialization
+           db │ 
+           db │ 2024-07-13 09:57:24.868 UTC [1] LOG:  starting PostgreSQL 16.0 (Debian 16.0-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+           db │ 2024-07-13 09:57:24.868 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+           db │ 2024-07-13 09:57:24.868 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+         auth │ 
+           db │ 2024-07-13 09:57:24.890 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+         auth │ STEP 2/2 — Deploying
+           db │ 2024-07-13 09:57:24.904 UTC [29] LOG:  database system was shut down at 2024-07-13 09:56:49 UTC
+           db │ 2024-07-13 09:57:24.923 UTC [1] LOG:  database system is ready to accept connections
+kong-database │  Container kong-database  Creating
+           db │ 
+           db │      Step 1 - 1.74s (Deploying)
+           db │      DONE IN: 1.74s 
+           db │ 
+        order │ 
+        order │ Initial Build
+        order │ STEP 1/2 — Building Dockerfile: [order-service-api]
+        order │ Building Dockerfile for platform linux/amd64:
+        order │   FROM alpine
+        order │   WORKDIR /app
+        order │   ADD build build
+        order │   ENTRYPOINT build/order-service-api
+        order │ 
+        order │      Building image
+kong-database │  Container kong-database  Created
+kong-database │  Container kong-database  Starting
+        order │      [background] read source files
+        order │      [1/3] FROM docker.io/library/alpine:latest@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0
+kong-database │  Container kong-database  Started
+        order │      [background] read source files 25.06MB [done: 228ms]
+        order │      [3/3] ADD build build [cached]
+        order │      [2/3] WORKDIR /app [cached]
+        order │      exporting to image
+        order │ 
+        order │ STEP 2/2 — Deploying
+kong-database │ 
+kong-database │ PostgreSQL Database directory appears to contain a database; Skipping initialization
+kong-database │ 
+kong-database │ 2024-07-13 09:57:26.528 UTC [1] LOG:  starting PostgreSQL 13.15 (Debian 13.15-1.pgdg120+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+kong-database │ 2024-07-13 09:57:26.529 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+kong-database │ 2024-07-13 09:57:26.529 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+kong-database │ 2024-07-13 09:57:26.534 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+kong-database │ 2024-07-13 09:57:26.541 UTC [27] LOG:  database system was shut down at 2024-07-13 09:56:52 UTC
+kong-database │ 2024-07-13 09:57:26.559 UTC [1] LOG:  database system is ready to accept connections
+kong-database │ 
+kong-database │      Step 1 - 3.37s (Deploying)
+kong-database │      DONE IN: 3.37s 
+kong-database │ 
+   kong-setup │ 
+   kong-setup │ Initial Build
+   kong-setup │ STEP 1/1 — Deploying
+         auth │  Container proshop-v2-auth-1  Creating
+         auth │  Container proshop-v2-auth-1  Created
+         auth │  Container proshop-v2-auth-1  Starting
+         auth │  Container proshop-v2-auth-1  Started
+         auth │ [Fx] PROVIDE	*http.Server <= github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer()
+         auth │ [Fx] PROVIDE	*sql.DB <= github.com/moaabb/ecommerce/auth_svc/infra/database.ConnectDB()
+         auth │ [Fx] PROVIDE	*userdb.Repository <= github.com/moaabb/ecommerce/auth_svc/infra/database/userdb.NewRepository()
+         auth │ [Fx] PROVIDE	*config.Config <= github.com/moaabb/ecommerce/auth_svc/infra/config.NewConfig()
+         auth │ [Fx] PROVIDE	*gin.Engine <= github.com/moaabb/ecommerce/auth_svc/infra/httpapi/router.NewRouter()
+         auth │ [Fx] PROVIDE	*handlers.AuthHandler <= github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.NewHandler()
+         auth │ [Fx] PROVIDE	*zap.Logger <= go.uber.org/zap.NewExample()
+         auth │ [Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+         auth │ [Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+         auth │ [Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+         auth │ [Fx] INVOKE		main.main.func1()
+         auth │ [Fx] RUN	provide: go.uber.org/fx.New.func1()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/config.NewConfig()
+         auth │ [Fx] RUN	provide: go.uber.org/zap.NewExample()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/database.ConnectDB()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/database/userdb.NewRepository()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.NewHandler()
+         auth │ [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+         auth │  - using env:	export GIN_MODE=release
+         auth │  - using code:	gin.SetMode(gin.ReleaseMode)
+         auth │ 
+         auth │ [GIN-debug] POST   /v1/auth/login            --> github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.(*AuthHandler).Login-fm (3 handlers)
+         auth │ [GIN-debug] POST   /v1/auth/logout           --> github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.(*AuthHandler).Logout-fm (3 handlers)
+         auth │ [GIN-debug] POST   /v1/auth                  --> github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.(*AuthHandler).ValidateRequest-fm (3 handlers)
+         auth │ [GIN-debug] GET    /v1/config/paypal         --> github.com/moaabb/ecommerce/auth_svc/infra/httpapi/handlers.(*AuthHandler).GetPaypalConfig-fm (3 handlers)
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/httpapi/router.NewRouter()
+         auth │ [Fx] RUN	provide: github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer()
+         auth │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer.func1() executing (caller: github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer)
+         auth │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer.func1() called by github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer ran successfully in 7.294µs
+         auth │ [Fx] RUNNING
+         auth │ 2024/07/13 09:57:28.119333 server.go:23: [Info] Application running on port 8080
+        order │  Container proshop-v2-order-1  Creating
+         auth │ 
+         auth │      Step 1 - 1.64s (Building Dockerfile: [auth-service-api])
+         auth │      Step 2 - 3.40s (Deploying)
+         auth │      DONE IN: 5.04s 
+         auth │ 
+      pgadmin │ 
+      pgadmin │ Initial Build
+      pgadmin │ STEP 1/1 — Deploying
+        order │  Container proshop-v2-order-1  Created
+        order │  Container proshop-v2-order-1  Starting
+        order │  Container proshop-v2-order-1  Started
+        order │ [Fx] PROVIDE	*http.Server <= github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer()
+        order │ [Fx] PROVIDE	*sql.DB <= github.com/moaabb/ecommerce/order_svc/infra/database.ConnectDB()
+        order │ [Fx] PROVIDE	*orderdb.Repository <= github.com/moaabb/ecommerce/order_svc/infra/database/orderdb.NewRepository()
+        order │ [Fx] PROVIDE	*config.Config <= github.com/moaabb/ecommerce/order_svc/infra/config.NewConfig()
+        order │ [Fx] PROVIDE	*gin.Engine <= github.com/moaabb/ecommerce/order_svc/infra/httpapi/router.NewRouter()
+        order │ [Fx] PROVIDE	*handlers.OrderHandler <= github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.NewOrderHandler()
+        order │ [Fx] PROVIDE	*middleware.AuthMiddleware <= github.com/moaabb/ecommerce/order_svc/infra/httpapi/middleware.NewAuthMiddleware()
+        order │ [Fx] PROVIDE	*zap.Logger <= go.uber.org/zap.NewExample()
+        order │ [Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+        order │ [Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+        order │ [Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+        order │ [Fx] INVOKE		main.main.func1()
+        order │ [Fx] RUN	provide: go.uber.org/fx.New.func1()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/config.NewConfig()
+        order │ [Fx] RUN	provide: go.uber.org/zap.NewExample()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/database.ConnectDB()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/database/orderdb.NewRepository()
+        order │ [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+        order │  - using env:	export GIN_MODE=release
+        order │  - using code:	gin.SetMode(gin.ReleaseMode)
+        order │ 
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.NewOrderHandler()
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/httpapi/middleware.NewAuthMiddleware()
+        order │ [GIN-debug] GET    /v1/orders                --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).GetAll-fm (4 handlers)
+        order │ [GIN-debug] GET    /v1/users/orders          --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).GetByUserId-fm (4 handlers)
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/httpapi/router.NewRouter()
+        order │ [GIN-debug] POST   /v1/orders                --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).Create-fm (4 handlers)
+        order │ [GIN-debug] GET    /v1/orders/:id            --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).GetById-fm (4 handlers)
+        order │ [GIN-debug] PUT    /v1/orders/:id/pay        --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).UpdateToPaid-fm (4 handlers)
+        order │ [GIN-debug] PUT    /v1/orders/:id/deliver    --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).UpdateToDelivered-fm (5 handlers)
+        order │ [GIN-debug] DELETE /v1/orders/:id            --> github.com/moaabb/ecommerce/order_svc/infra/httpapi/handlers.(*OrderHandler).Delete-fm (5 handlers)
+        order │ [Fx] RUN	provide: github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer()
+        order │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer.func1() executing (caller: github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer)
+        order │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer.func1() called by github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer ran successfully in 2.895µs
+        order │ [Fx] RUNNING
+        order │ 2024/07/13 09:57:29.249987 server.go:23: [Info] Application running on port 8080
+        order │ 
+        order │      Step 1 - 1.45s (Building Dockerfile: [order-service-api])
+        order │      Step 2 - 3.01s (Deploying)
+        order │      DONE IN: 4.46s 
+        order │ 
+      product │ 
+      product │ Initial Build
+      product │ STEP 1/2 — Building Dockerfile: [product-service-api]
+      product │ Building Dockerfile for platform linux/amd64:
+      product │   FROM alpine
+      product │   WORKDIR /app
+      product │   ADD build build
+      product │   ENTRYPOINT build/product-service-api
+      product │ 
+      product │      Building image
+   kong-setup │  Container proshop-v2-kong-setup-1  Creating
+   kong-setup │  Container proshop-v2-kong-setup-1  Created
+   kong-setup │  Container proshop-v2-kong-setup-1  Starting
+      product │      [background] read source files
+      product │      [1/3] FROM docker.io/library/alpine:latest@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0
+      product │      [background] read source files 25.01MB [done: 260ms]
+      product │      [3/3] ADD build build [cached]
+      product │      [2/3] WORKDIR /app [cached]
+      product │      exporting to image
+   kong-setup │  Container proshop-v2-kong-setup-1  Started
+      product │ 
+      product │ STEP 2/2 — Deploying
+   kong-setup │ 
+   kong-setup │      Step 1 - 4.07s (Deploying)
+   kong-setup │      DONE IN: 4.07s 
+   kong-setup │ 
+         kong │ 
+         kong │ Initial Build
+         kong │ STEP 1/1 — Deploying
+      pgadmin │  Container proshop-v2-pgadmin-1  Creating
+      pgadmin │  Container proshop-v2-pgadmin-1  Created
+      pgadmin │  Container proshop-v2-pgadmin-1  Starting
+      pgadmin │  Container proshop-v2-pgadmin-1  Started
+      product │  Container proshop-v2-product-1  Creating
+      pgadmin │ 
+      pgadmin │      Step 1 - 4.60s (Deploying)
+      pgadmin │      DONE IN: 4.60s 
+      pgadmin │ 
+         user │ 
+         user │ Initial Build
+         user │ STEP 1/2 — Building Dockerfile: [user-service-api]
+         user │ Building Dockerfile for platform linux/amd64:
+         user │   FROM alpine
+         user │   WORKDIR /app
+         user │   ADD build build
+         user │   ENTRYPOINT build/user-service-api
+         user │ 
+         user │      Building image
+      product │  Container proshop-v2-product-1  Created
+      product │  Container proshop-v2-product-1  Starting
+         user │      [background] read source files
+         user │      [1/3] FROM docker.io/library/alpine:latest@sha256:b89d9c93e9ed3597455c90a0b88a8bbb5cb7188438f70953fede212a0c4394e0
+      product │  Container proshop-v2-product-1  Started
+         user │      [background] read source files 25.01MB [done: 319ms]
+         user │      [3/3] ADD build build [cached]
+         user │      [2/3] WORKDIR /app [cached]
+         user │      exporting to image
+      product │ [Fx] PROVIDE	*http.Server <= github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer()
+      product │ [Fx] PROVIDE	*sql.DB <= github.com/moaabb/ecommerce/product_svc/infra/database.ConnectDB()
+      product │ [Fx] PROVIDE	*productdb.Repository <= github.com/moaabb/ecommerce/product_svc/infra/database/productdb.NewRepository()
+      product │ [Fx] PROVIDE	*config.Config <= github.com/moaabb/ecommerce/product_svc/infra/config.NewConfig()
+      product │ [Fx] PROVIDE	*gin.Engine <= github.com/moaabb/ecommerce/product_svc/infra/httpapi/router.NewRouter()
+      product │ [Fx] PROVIDE	*middleware.AuthMiddleware <= github.com/moaabb/ecommerce/product_svc/infra/httpapi/middleware.NewAuthMiddleware()
+      product │ [Fx] PROVIDE	*handlers.ProductHandler <= github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.NewHandler()
+      product │ [Fx] PROVIDE	*zap.Logger <= go.uber.org/zap.NewExample()
+      product │ [Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+      product │ [Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+      product │ [Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+      product │ [Fx] INVOKE		main.main.func1()
+      product │ [Fx] RUN	provide: go.uber.org/fx.New.func1()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/config.NewConfig()
+      product │ [Fx] RUN	provide: go.uber.org/zap.NewExample()
+      product │ [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+      product │  - using env:	export GIN_MODE=release
+      product │  - using code:	gin.SetMode(gin.ReleaseMode)
+      product │ 
+      product │ [GIN-debug] GET    /v1/products              --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).GetAll-fm (3 handlers)
+      product │ [GIN-debug] POST   /v1/products              --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).Create-fm (5 handlers)
+      product │ [GIN-debug] POST   /v1/products/:id/reviews  --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).CreateReview-fm (4 handlers)
+      product │ [GIN-debug] GET    /v1/products/top          --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).GetTopProducts-fm (3 handlers)
+      product │ [GIN-debug] GET    /v1/products/:id          --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).GetById-fm (3 handlers)
+      product │ [GIN-debug] PUT    /v1/products/:id          --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).Update-fm (5 handlers)
+      product │ [GIN-debug] DELETE /v1/products/:id          --> github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.(*ProductHandler).Delete-fm (5 handlers)
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/database.ConnectDB()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/database/productdb.NewRepository()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/httpapi/handlers.NewHandler()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/httpapi/middleware.NewAuthMiddleware()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/httpapi/router.NewRouter()
+      product │ [Fx] RUN	provide: github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer()
+      product │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer.func1() executing (caller: github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer)
+      product │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer.func1() called by github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer ran successfully in 8.346µs
+      product │ 2024/07/13 09:57:34.151387 server.go:23: [Info] Application running on port 8080
+      product │ [Fx] RUNNING
+         user │ 
+         user │ STEP 2/2 — Deploying
+      product │ 
+      product │      Step 1 - 1.05s (Building Dockerfile: [product-service-api])
+      product │      Step 2 - 3.92s (Deploying)
+      product │      DONE IN: 4.98s 
+      product │ 
+         kong │  Container proshop-v2-kong-1  Creating
+         kong │  Container proshop-v2-kong-1  Created
+         kong │  Container proshop-v2-kong-1  Starting
+   kong-setup │ Database already bootstrapped
+         kong │  Container proshop-v2-kong-1  Started
+         kong │ 
+         kong │      Step 1 - 5.83s (Deploying)
+         kong │      DONE IN: 5.83s 
+         kong │ 
+         user │  Container proshop-v2-user-1  Creating
+         user │  Container proshop-v2-user-1  Created
+         user │  Container proshop-v2-user-1  Starting
+         user │  Container proshop-v2-user-1  Started
+         user │ [Fx] PROVIDE	*http.Server <= github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer()
+         user │ [Fx] PROVIDE	*sql.DB <= github.com/moaabb/ecommerce/user_svc/infra/database.ConnectDB()
+         user │ [Fx] PROVIDE	*userdb.Repository <= github.com/moaabb/ecommerce/user_svc/infra/database/userdb.NewRepository()
+         user │ [Fx] PROVIDE	*config.Config <= github.com/moaabb/ecommerce/user_svc/infra/config.NewConfig()
+         user │ [Fx] PROVIDE	*middleware.AuthMiddleware <= github.com/moaabb/ecommerce/user_svc/infra/httpapi/middleware.NewAuthMiddleware()
+         user │ [Fx] PROVIDE	*gin.Engine <= github.com/moaabb/ecommerce/user_svc/infra/httpapi/router.NewRouter()
+         user │ [Fx] PROVIDE	*handlers.UserHandler <= github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.NewHandler()
+         user │ [Fx] PROVIDE	*zap.Logger <= go.uber.org/zap.NewExample()
+         user │ [Fx] PROVIDE	fx.Lifecycle <= go.uber.org/fx.New.func1()
+         user │ [Fx] PROVIDE	fx.Shutdowner <= go.uber.org/fx.(*App).shutdowner-fm()
+         user │ [Fx] PROVIDE	fx.DotGraph <= go.uber.org/fx.(*App).dotGraph-fm()
+         user │ [Fx] INVOKE		main.main.func1()
+         user │ [Fx] RUN	provide: go.uber.org/fx.New.func1()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/config.NewConfig()
+         user │ [Fx] RUN	provide: go.uber.org/zap.NewExample()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/database.ConnectDB()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/database/userdb.NewRepository()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.NewHandler()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/httpapi/middleware.NewAuthMiddleware()
+         user │ [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+         user │  - using env:	export GIN_MODE=release
+         user │  - using code:	gin.SetMode(gin.ReleaseMode)
+         user │ 
+         user │ [GIN-debug] GET    /v1/users                 --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).GetAll-fm (5 handlers)
+         user │ [GIN-debug] POST   /v1/users                 --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).Create-fm (3 handlers)
+         user │ [GIN-debug] GET    /v1/users/:id             --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).GetById-fm (4 handlers)
+         user │ [GIN-debug] PUT    /v1/users/:id             --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).Update-fm (4 handlers)
+         user │ [GIN-debug] DELETE /v1/users/:id             --> github.com/moaabb/ecommerce/user_svc/infra/httpapi/handlers.(*UserHandler).Delete-fm (5 handlers)
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/httpapi/router.NewRouter()
+         user │ [Fx] RUN	provide: github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer()
+         user │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer.func1() executing (caller: github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer)
+         user │ [Fx] HOOK OnStart		github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer.func1() called by github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer ran successfully in 1.913µs
+         user │ 2024/07/13 09:57:37.378661 server.go:23: [Info] Application running on port 8080
+         user │ [Fx] RUNNING
+         user │ 
+         user │      Step 1 - 1.34s (Building Dockerfile: [user-service-api])
+         user │      Step 2 - 3.35s (Deploying)
+         user │      DONE IN: 4.71s 
+         user │ 
+         kong │ 2024/07/13 09:57:40 [warn] 1#0: the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ nginx: [warn] the "user" directive makes sense only if the master process runs with super-user privileges, ignored in /usr/local/kong/nginx.conf:7
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: [lua] init.lua:851: init(): [request-debug] token for request debugging: 0657e5af-cf34-4bce-8f07-7a88c7343612
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: using the "epoll" event method
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: openresty/1.21.4.2
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: OS: Linux 6.6.10-76060610-generic
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: start worker processes
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: start worker process 2381
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: start worker process 2382
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: start worker process 2383
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: start worker process 2384
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: start worker process 2385
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: start worker process 2386
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: start worker process 2387
+         kong │ 2024/07/13 09:57:40 [notice] 1#0: start worker process 2388
+         kong │ 2024/07/13 09:57:42 [notice] 2386#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:42 [notice] 2384#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:42 [notice] 2381#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:42 [notice] 2388#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:42 [notice] 2387#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2381#0: *1 [lua] warmup.lua:117: single_dao(): Preloading 'services' into the core_cache..., context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:42 [notice] 2382#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:42 [notice] 2385#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:42 [notice] 2383#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2381#0: *1 [lua] warmup.lua:166: single_dao(): finished preloading 'services' into the core_cache (in 0ms), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2384#0: *4 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2387#0: *8 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.001 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2384#0: *4 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2387#0: *8 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.002 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2384#0: *4 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2387#0: *8 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.004 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2384#0: *4 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.008 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2387#0: *8 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.008 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2384#0: *4 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.016 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2387#0: *8 [lua] globalpatches.lua:83: sleep(): executing a blocking 'sleep' (0.016 seconds), context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2388#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2384#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2386#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2388#0: *6 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2387#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2384#0: *4 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2382#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2386#0: *5 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2387#0: *8 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2381#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2382#0: *3 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2385#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2383#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2385#0: *7 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2381#0: *1 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 2024/07/13 09:57:43 [notice] 2383#0: *2 [lua] license_helpers.lua:173: read_license_info(): [license-helpers] could not decode license JSON: No license found, context: init_worker_by_lua*
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:50 +0000] "POST /services/ HTTP/1.1" 201 378 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /services/order-service/routes HTTP/1.1" 201 485 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /services/ HTTP/1.1" 201 380 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /services/product-service/routes HTTP/1.1" 201 489 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /services/ HTTP/1.1" 201 377 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /services/user-service/routes HTTP/1.1" 201 483 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /services/ HTTP/1.1" 201 377 "-" "curl/7.81.0"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /services/auth-service/routes HTTP/1.1" 201 482 "-" "curl/7.81.0"
+kong-database │ 2024-07-13 09:57:51.453 UTC [85] ERROR:  duplicate key value violates unique constraint "services_ws_id_name_unique"
+kong-database │ 2024-07-13 09:57:51.453 UTC [85] DETAIL:  Key (ws_id, name)=(a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c, asset-service) already exists.
+kong-database │ 2024-07-13 09:57:51.453 UTC [85] STATEMENT:  INSERT INTO "services" ("id", "created_at", "updated_at", "name", "retries", "protocol", "host", "port", "path", "connect_timeout", "write_timeout", "read_timeout", "tags", "client_certificate_id", "tls_verify", "tls_verify_depth", "ca_certificates", "enabled", "ws_id")
+kong-database │ 	     VALUES ('e465f056-8582-4f93-9f10-f061495704c8', TO_TIMESTAMP(1720864671) AT TIME ZONE 'UTC', TO_TIMESTAMP(1720864671) AT TIME ZONE 'UTC', 'asset-service', 5, 'http', '192.168.0.110', 6060, NULL, 60000, 60000, 60000, NULL, NULL, NULL, NULL, NULL, TRUE, 'a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c')
+         kong │ 2024/07/13 09:57:51 [notice] 2381#0: *1208 [lua] init.lua:246: insert(): ERROR: duplicate key value violates unique constraint "services_ws_id_name_unique"
+         kong │ Key (ws_id, name)=(a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c, asset-service) already exists., client: 192.168.0.110, server: kong_admin, request: "POST /services/ HTTP/1.1", host: "192.168.0.110:8001"
+kong-database │ 	  RETURNING "id", EXTRACT(EPOCH FROM "created_at" AT TIME ZONE 'UTC') AS "created_at", EXTRACT(EPOCH FROM "updated_at" AT TIME ZONE 'UTC') AS "updated_at", "name", "retries", "protocol", "host", "port", "path", "connect_timeout", "write_timeout", "read_timeout", "tags", "client_certificate_id", "tls_verify", "tls_verify_depth", "ca_certificates", "enabled", "ws_id";
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /services/ HTTP/1.1" 409 149 "-" "curl/7.81.0"
+kong-database │ 2024-07-13 09:57:51.497 UTC [84] ERROR:  duplicate key value violates unique constraint "routes_ws_id_name_unique"
+kong-database │ 2024-07-13 09:57:51.497 UTC [84] DETAIL:  Key (ws_id, name)=(a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c, asset-route) already exists.
+kong-database │ 2024-07-13 09:57:51.497 UTC [84] STATEMENT:  INSERT INTO "routes" ("id", "created_at", "updated_at", "name", "protocols", "methods", "hosts", "paths", "headers", "https_redirect_status_code", "regex_priority", "strip_path", "path_handling", "preserve_host", "request_buffering", "response_buffering", "snis", "sources", "destinations", "tags", "service_id", "ws_id")
+kong-database │ 	     VALUES ('ba2ed080-2b4d-4555-a281-2b88f146a210', TO_TIMESTAMP(1720864671) AT TIME ZONE 'UTC', TO_TIMESTAMP(1720864671) AT TIME ZONE 'UTC', 'asset-route', ARRAY['http','https'], NULL, NULL, ARRAY['/uploads'], NULL, 426, 0, TRUE, 'v0', FALSE, TRUE, TRUE, NULL, NULL, NULL, NULL, 'd838d0c2-557d-43e6-a2a5-7ab9958e87c5', 'a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c')
+kong-database │ 	  RETURNING "id", EXTRACT(EPOCH FROM "created_at" AT TIME ZONE 'UTC') AS "created_at", EXTRACT(EPOCH FROM "updated_at" AT TIME ZONE 'UTC') AS "updated_at", "name", "protocols", "methods", "hosts", "paths", "headers", "https_redirect_status_code", "regex_priority", "strip_path", "path_handling", "preserve_host", "request_buffering", "response_buffering", "snis", "sources", "destinations", "tags", "service_id", "ws_id";
+         kong │ 2024/07/13 09:57:51 [notice] 2381#0: *1209 [lua] init.lua:246: insert(): ERROR: duplicate key value violates unique constraint "routes_ws_id_name_unique"
+         kong │ Key (ws_id, name)=(a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c, asset-route) already exists., client: 192.168.0.110, server: kong_admin, request: "POST /services/asset-service/routes HTTP/1.1", host: "192.168.0.110:8001"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /services/asset-service/routes HTTP/1.1" 409 145 "-" "curl/7.81.0"
+kong-database │ 2024-07-13 09:57:51.543 UTC [87] ERROR:  duplicate key value violates unique constraint "plugins_cache_key_key"
+kong-database │ 2024-07-13 09:57:51.543 UTC [87] DETAIL:  Key (cache_key)=(plugins:cors:::::a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c) already exists.
+kong-database │ 2024-07-13 09:57:51.543 UTC [87] STATEMENT:  INSERT INTO "plugins" ("id", "name", "instance_name", "created_at", "updated_at", "route_id", "service_id", "consumer_id", "consumer_group_id", "config", "protocols", "enabled", "tags", "ordering", "cache_key", "ws_id")
+kong-database │ 	     VALUES ('e968cddd-de12-4dbc-a437-3e94ac438c9a', 'cors', NULL, TO_TIMESTAMP(1720864671) AT TIME ZONE 'UTC', TO_TIMESTAMP(1720864671) AT TIME ZONE 'UTC', NULL, NULL, NULL, NULL, '{"methods":["GET","POST","PATCH","PUT","DELETE","OPTIONS"],"preflight_continue":false,"private_network":false,"exposed_headers":["X-Auth-Token","Access-Control-Allow-Origin"],"max_age":3600,"credentials":true,"origins":["http://192.168.0.110:3000","http://localhost:3000"],"headers":["Accept","Accept-Version","Content-Length","Content-MD5","Content-Type","Authorization","Date","X-Auth-Token"]}', ARRAY['grpc','grpcs','http','https'], TRUE, NULL, NULL, 'plugins:cors:::::a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c', 'a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c')
+kong-database │ 	  RETURNING "id", "name", "instance_name", EXTRACT(EPOCH FROM "created_at" AT TIME ZONE 'UTC') AS "created_at", EXTRACT(EPOCH FROM "updated_at" AT TIME ZONE 'UTC') AS "updated_at", "route_id", "service_id", "consumer_id", "consumer_group_id", "config", "protocols", "enabled", "tags", "ordering", "ws_id";
+         kong │ 2024/07/13 09:57:51 [notice] 2381#0: *1210 [lua] init.lua:246: insert(): ERROR: duplicate key value violates unique constraint "plugins_cache_key_key"
+         kong │ Key (cache_key)=(plugins:cors:::::a2cdc39a-4e19-41e0-8dc9-abfa380a6f2c) already exists., client: 192.168.0.110, server: kong_admin, request: "POST /plugins HTTP/1.1", host: "192.168.0.110:8001"
+         kong │ 192.168.0.110 - - [13/Jul/2024:09:57:51 +0000] "POST /plugins HTTP/1.1" 409 255 "-" "curl/7.81.0"
+           db │ 2024-07-13 09:57:52.305 UTC [44] ERROR:  duplicate key value violates unique constraint "users_email_key"
+           db │ 2024-07-13 09:57:52.305 UTC [44] DETAIL:  Key (email)=(admin@email.com) already exists.
+           db │ 2024-07-13 09:57:52.305 UTC [44] STATEMENT:  INSERT INTO users (name, email, password, is_admin, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)
+           db │ 2024-07-13 09:57:52.306 UTC [44] ERROR:  duplicate key value violates unique constraint "users_email_key"
+           db │ 2024-07-13 09:57:52.306 UTC [44] DETAIL:  Key (email)=(john@email.com) already exists.
+           db │ 2024-07-13 09:57:52.306 UTC [44] STATEMENT:  INSERT INTO users (name, email, password, is_admin, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)
+           db │ 2024-07-13 09:57:52.307 UTC [44] ERROR:  duplicate key value violates unique constraint "users_email_key"
+           db │ 2024-07-13 09:57:52.307 UTC [44] DETAIL:  Key (email)=(jane@email.com) already exists.
+           db │ 2024-07-13 09:57:52.307 UTC [44] STATEMENT:  INSERT INTO users (name, email, password, is_admin, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)
+      pgadmin │ NOTE: Configuring authentication for SERVER mode.
+      pgadmin │ 
+      pgadmin │ pgAdmin 4 - Application Initialisation
+      pgadmin │ ======================================
+      pgadmin │ 
+      pgadmin │ postfix/postlog: starting the Postfix mail system
+      pgadmin │ [2024-07-13 09:58:12 +0000] [1] [INFO] Starting gunicorn 22.0.0
+      pgadmin │ [2024-07-13 09:58:12 +0000] [1] [INFO] Listening at: http://[::]:80 (1)
+      pgadmin │ [2024-07-13 09:58:12 +0000] [1] [INFO] Using worker: gthread
+      pgadmin │ [2024-07-13 09:58:12 +0000] [117] [INFO] Booting worker with pid: 117
+      pgadmin │ [2024-07-13 10:00:34 +0000] [1] [INFO] Handling signal: term
+           db │ 2024-07-13 10:00:34.068 UTC [1] LOG:  received fast shutdown request
+           db │ 2024-07-13 10:00:34.072 UTC [1] LOG:  aborting any active transactions
+           db │ 2024-07-13 10:00:34.072 UTC [40] FATAL:  terminating connection due to administrator command
+           db │ 2024-07-13 10:00:34.072 UTC [36] FATAL:  terminating connection due to administrator command
+           db │ 2024-07-13 10:00:34.072 UTC [38] FATAL:  terminating connection due to administrator command
+           db │ 2024-07-13 10:00:34.072 UTC [34] FATAL:  terminating connection due to administrator command
+        order │ [Fx] TERMINATED
+        order │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer.func2() executing (caller: github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer)
+        order │ 2024/07/13 10:00:34.082544 server.go:30: [Info] stopping the server...
+        order │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer.func2() called by github.com/moaabb/ecommerce/order_svc/infra/httpapi.NewServer ran successfully in 145.884µs
+         auth │ [Fx] TERMINATED
+         auth │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer.func2() executing (caller: github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer)
+         auth │ 2024/07/13 10:00:34.082818 server.go:30: [Info] stopping the server...
+         auth │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer.func2() called by github.com/moaabb/ecommerce/auth_svc/infra/httpapi.NewServer ran successfully in 303.932µs
+         kong │ 2024/07/13 10:00:34 [notice] 1#0: signal 3 (SIGQUIT) received, shutting down
+         kong │ 2024/07/13 10:00:34 [notice] 2382#0: gracefully shutting down
+         kong │ 2024/07/13 10:00:34 [notice] 2385#0: gracefully shutting down
+         kong │ 2024/07/13 10:00:34 [notice] 2381#0: gracefully shutting down
+         kong │ 2024/07/13 10:00:34 [notice] 2383#0: gracefully shutting down
+         kong │ 2024/07/13 10:00:34 [notice] 2387#0: gracefully shutting down
+         kong │ 2024/07/13 10:00:34 [notice] 2388#0: gracefully shutting down
+         kong │ 2024/07/13 10:00:34 [notice] 2384#0: gracefully shutting down
+         kong │ 2024/07/13 10:00:34 [notice] 2386#0: gracefully shutting down
+           db │ 2024-07-13 10:00:34.099 UTC [1] LOG:  background worker "logical replication launcher" (PID 32) exited with exit code 1
+           db │ 2024-07-13 10:00:34.101 UTC [27] LOG:  shutting down
+         user │ [Fx] TERMINATED
+         user │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer.func2() executing (caller: github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer)
+         user │ 2024/07/13 10:00:34.103130 server.go:30: [Info] stopping the server...
+         user │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer.func2() called by github.com/moaabb/ecommerce/user_svc/infra/httpapi.NewServer ran successfully in 416.734µs
+           db │ 2024-07-13 10:00:34.102 UTC [27] LOG:  checkpoint starting: shutdown immediate
+      product │ [Fx] TERMINATED
+      product │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer.func2() executing (caller: github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer)
+      product │ 2024/07/13 10:00:34.107132 server.go:30: [Info] stopping the server...
+      product │ [Fx] HOOK OnStop		github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer.func2() called by github.com/moaabb/ecommerce/product_svc/infra/httpapi.NewServer ran successfully in 214.243µs
+           db │ 2024-07-13 10:00:34.117 UTC [27] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.006 s, total=0.017 s; sync files=8, longest=0.003 s, average=0.001 s; distance=6 kB, estimate=6 kB; lsn=0/197C400, redo lsn=0/197C400
+           db │ 2024-07-13 10:00:34.135 UTC [1] LOG:  database system is shut down
+         kong │ 2024/07/13 10:00:34 [notice] 2388#0: exiting
+      pgadmin │ [2024-07-13 10:00:34 +0000] [117] [INFO] Worker exiting (pid: 117)
+         kong │ 2024/07/13 10:00:34 [notice] 2382#0: exiting
+         kong │ 2024/07/13 10:00:34 [notice] 2384#0: exiting
+         kong │ 2024/07/13 10:00:34 [notice] 2383#0: exiting
+         kong │ 2024/07/13 10:00:34 [notice] 2387#0: exiting
+         kong │ 2024/07/13 10:00:34 [notice] 2385#0: exiting
+         kong │ 2024/07/13 10:00:34 [notice] 2386#0: exiting
+         kong │ 2024/07/13 10:00:35 [notice] 2381#0: exiting
+         kong │ 2024/07/13 10:00:34 [notice] 2382#0: exit
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 17 (SIGCHLD) received from 2382
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: worker process 2382 exited with code 0
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 10:00:34 [notice] 2388#0: exit
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 17 (SIGCHLD) received from 2388
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: worker process 2388 exited with code 0
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 10:00:34 [notice] 2384#0: exit
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 17 (SIGCHLD) received from 2384
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: worker process 2384 exited with code 0
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 10:00:34 [notice] 2383#0: exit
+         kong │ 2024/07/13 10:00:34 [notice] 2385#0: exit
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 17 (SIGCHLD) received from 2383
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: worker process 2383 exited with code 0
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 17 (SIGCHLD) received from 2385
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: worker process 2385 exited with code 0
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 10:00:34 [notice] 2387#0: exit
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 17 (SIGCHLD) received from 2387
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: worker process 2387 exited with code 0
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 10:00:34 [notice] 2386#0: exit
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 17 (SIGCHLD) received from 2386
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: worker process 2386 exited with code 0
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 29 (SIGIO) received
+         kong │ 2024/07/13 10:00:35 [notice] 2381#0: exit
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: signal 17 (SIGCHLD) received from 2381
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: worker process 2381 exited with code 0
+         kong │ 2024/07/13 10:00:35 [notice] 1#0: exit
+      pgadmin │ [2024-07-13 10:00:36 +0000] [1] [INFO] Shutting down: Master
+kong-database │ 2024-07-13 10:00:37.053 UTC [1] LOG:  received fast shutdown request
+kong-database │ 2024-07-13 10:00:37.055 UTC [1] LOG:  aborting any active transactions
+kong-database │ 2024-07-13 10:00:37.062 UTC [1] LOG:  background worker "logical replication launcher" (PID 33) exited with exit code 1
+kong-database │ 2024-07-13 10:00:37.069 UTC [28] LOG:  shutting down
+kong-database │ 2024-07-13 10:00:37.120 UTC [1] LOG:  database system is shut down

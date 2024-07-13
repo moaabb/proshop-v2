@@ -40,6 +40,7 @@ services:
             - 8445:8445
             - 8003:8003
             - 8004:8004
+        restart: always
 
     kong-database:
         container_name: kong-database
@@ -52,6 +53,7 @@ services:
             - POSTGRES_PASSWORD=kongpass
         volumes:
             - kongdb:/var/lib/postgresql/data
+        restart: always
 
     db:
         networks:
@@ -66,6 +68,8 @@ services:
         volumes:
             - 'ecommercedb:/var/lib/postgresql/data'
             - './ecommerce.sql:/docker-entrypoint-initdb.d/init.sql'
+        restart: always
+
     pgadmin:
         networks:
             - app
@@ -93,7 +97,7 @@ services:
         image: auth-service-api
         environment:
             PORT: :8080
-            DOMAIN: '10.0.0.9'
+            DOMAIN: 192.168.0.110'
             DB_URL: 'postgres://moab:supersecure@db:5432/ecommerce'
             JWT_SECRET: supersecrekey
             PAYPAL_CLIENT_ID: AXAMRqBifFfLVEeDfz9MfA33RCV6J7EZ34c_nN_zte04m6JWGC6UQBbaK_oZZw-vZr9mEU0eUs4UH2rC

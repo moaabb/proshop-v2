@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Define the Kong Admin API URL
-DOMAIN="10.0.0.9"
+DOMAIN=$(ip route get 8.8.8.8 | sed -n '/src/{s/.*src *\([^ ]*\).*/\1/p;q}')
+export APP_DOMAIN=$DOMAIN
 KONG_ADMIN_API="http://$DOMAIN:8001"
 
 # Function to create a service
